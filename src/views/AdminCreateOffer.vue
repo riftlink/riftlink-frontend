@@ -1,0 +1,144 @@
+<template>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <!-- Back Button -->
+        <v-row>
+          <v-col cols="12" sm="8" md="6">
+            <router-link to="/admin/offers">Atrás</router-link>
+          </v-col>
+        </v-row>
+
+        <v-card>
+          <v-card-title>
+            <div>
+              <span class="headline">Crear nueva oferta</span>
+            </div>
+          </v-card-title>
+
+          <v-col cols="12" sm="12" md="12">
+            <!-- Position Name Field -->
+            <v-text-field
+              v-model="offer.positionName"
+              label="Posición"
+              outlined
+            ></v-text-field>
+
+            <!-- Team Name Field -->
+            <v-text-field
+              v-model="offer.teamName"
+              label="Nombre del equipo"
+              outlined
+            ></v-text-field>
+
+            <!-- Logo Component -->
+            <v-row justify="center">
+              <v-col cols="12" md="2">
+                <v-avatar
+                  class="mb-4"
+                  color="grey-darken-1"
+                  size="64"
+                >
+                  <v-img
+                    alt="Avatar"
+                    :src="offer.logoUrl"></v-img>
+                </v-avatar>
+              </v-col>
+              <v-col cols="12" md="10">
+                <v-text-field
+                  v-model="offer.logoUrl"
+                  label="URL del avatar"
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <!-- Rank Field -->
+            <v-text-field
+              v-model="offer.rank"
+              label="Rango requerido"
+              outlined
+            ></v-text-field>
+
+            <!-- Requirements Field -->
+            <v-textarea
+              v-model="offer.requirements"
+              label="Qué pedimos"
+              outlined
+            ></v-textarea>
+
+            <!-- About Us Field -->
+            <v-textarea
+              v-model="offer.aboutUs"
+              label="Qué ofrecemos"
+              outlined
+            ></v-textarea>
+
+            <!-- Apply Url Field -->
+            <v-text-field
+              v-model="offer.applyUrl"
+              label="Link para aplicar"
+              outlined
+            ></v-text-field>
+
+            <!-- Checkbox Active -->
+            <v-checkbox
+                v-model="offer.active"
+                label="Activa"></v-checkbox>
+          </v-col>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- Create Button -->
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="6">
+        <v-btn block color="primary" @click="createOffer">Crear</v-btn>
+      </v-col>
+    </v-row>
+
+  </v-container>
+</template>
+
+<script>
+import { useAuth0 } from '@auth0/auth0-vue';
+
+import offersApiClient from "@/services/OffersApiClient.js"
+
+export default {
+  data() {
+    return {
+      loading: true,
+      offer: {
+        teamName: '',
+        positionName: '',
+        rank: '',
+        logoUrl: '',
+        applyUrl: '',
+        requirements: '',
+        aboutUs: '',
+        active: false,
+      },
+    };
+  },
+  setup() {
+    const { getAccessTokenSilently } = useAuth0();
+
+    return {
+      getAccessTokenSilently,
+    }
+  },
+  methods: {
+    async createOffer() {
+      try {
+        const accessToken = await this.getAccessTokenSilently()
+        await offersApiClient.createOffer(accessToken, this.offer)
+        console.log("Creada con éxito!!")
+        this.$router.push('/admin/offers');
+      } catch (error) {
+        console.error("Error al guardar el los detalles de la oferta:", error);
+      }
+    },
+  },
+};
+</script>
