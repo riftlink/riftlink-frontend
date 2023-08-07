@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-s3@3.1.1
+
+workflows:
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:20.5.0
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install --legacy-peer-deps
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Build the application
+          command: npm run build-pre
+  deploy:
+    docker:
+      - image: cimg/node:20.5.0
+    steps:
+      - checkout
+      - aws-s3/sync:
+          from: dist
+          to: 's3://riftlink-webapp-pre'
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
