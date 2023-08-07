@@ -44,7 +44,7 @@ jobs:
       - image: cimg/node:20.5.0
     steps:
       - attach_workspace:
-          at: dist
+          at: .
       - aws-s3/sync:
           from: dist
           to: 's3://riftlink-webapp-pre'
