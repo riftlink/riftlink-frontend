@@ -104,31 +104,19 @@
 
   </v-container>
 
-  <v-snackbar
-      v-model="alert.visible"
-      :color="alert.color"
-      variant="elevated"
-      location="top end"
-      :timeout="5000"
-    >
-    {{ alert.text }}
-
-    <template v-slot:actions>
-      <v-btn
-        @click="alert.visible = false"
-      >
-        Cerrar
-      </v-btn>
-    </template>
-  </v-snackbar>
+  <Alert ref="alert" />
 </template>
 
 <script>
+import Alert from '@/components/Alert.vue';
 import offersApiClient from "@/services/OffersApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
       loading: true,
@@ -167,21 +155,11 @@ export default {
       const accessToken = await this.getAccessTokenSilently()
       try {
         await offersApiClient.saveOffer(accessToken, offerId, this.offer)
-        this.alertSuccess("¡Guardado con éxito!")
+        this.$refs.alert.alertSuccess("¡Guardado con éxito!")
       } catch (error) {
-        this.alertError("¡Ups! Hubo un error al guardar la oferta.")
+        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar la oferta.")
         console.error("Couldn't save offer:", error);
       }
-    },
-    alertSuccess(message) {
-      this.alert.text = message
-      this.alert.color = 'success'
-      this.alert.visible = true
-    },
-    alertError(message) {
-      this.alert.text = message
-      this.alert.color = 'error'
-      this.alert.visible = true
     },
   },
 };
