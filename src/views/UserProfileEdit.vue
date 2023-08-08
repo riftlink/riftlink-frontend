@@ -7,58 +7,63 @@
       </v-col>
     </v-row>
 
-    <!-- Avatar Component -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-avatar
-          class="mb-4"
-          color="grey-darken-1"
-          size="64"
-        >
-          <v-img
-            alt="Avatar"
-            :src="avatarUrl"></v-img>
-        </v-avatar>
-      </v-col>
-    </v-row>
+    <template v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </template>
+    <template v-else>
+      <!-- Avatar Component -->
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-avatar
+            class="mb-4"
+            color="grey-darken-1"
+            size="64"
+          >
+            <v-img
+              alt="Avatar"
+              :src="avatarUrl"></v-img>
+          </v-avatar>
+        </v-col>
+      </v-row>
 
-    <!-- Username Field -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-text-field
-          v-model="username"
-          label="Nombre de usuario"
-          outlined
-          disabled
-        ></v-text-field>
-      </v-col>
-    </v-row>
+      <!-- Username Field -->
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-text-field
+            v-model="username"
+            label="Nombre de usuario"
+            outlined
+            disabled
+          ></v-text-field>
+        </v-col>
+      </v-row>
 
-    <!-- Summoner name Field -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-text-field v-model="summonerName" label="Nombre de invocador" outlined></v-text-field>
-      </v-col>
-    </v-row>
+      <!-- Summoner name Field -->
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-text-field v-model="summonerName" label="Nombre de invocador" outlined></v-text-field>
+        </v-col>
+      </v-row>
 
-    <!-- About me Field -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-textarea
-          v-model="aboutMe"
-          label="Sobre mí"
-          outlined
-          rows="3"
-        ></v-textarea>
-      </v-col>
-    </v-row>
+      <!-- About me Field -->
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-textarea
+            v-model="aboutMe"
+            label="Sobre mí"
+            outlined
+            rows="3"
+          ></v-textarea>
+        </v-col>
+      </v-row>
 
-    <!-- Save Button -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-btn block color="primary" @click="saveProfile">Guardar</v-btn>
-      </v-col>
-    </v-row>
+      <!-- Save Button -->
+      <v-row justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-btn block color="primary" @click="saveProfile">Guardar</v-btn>
+        </v-col>
+      </v-row>
+    </template>
   </v-container>
 
   <Alert ref="alert" />
@@ -77,6 +82,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       username: "",
       avatarUrl: "",
       summonerName: "",
@@ -116,6 +122,8 @@ export default {
       } catch (err) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar tu perfil.")
         console.error("Couldn't get current user profile:", err);
+      } finally {
+        this.loading = false
       }
     },
     async saveProfile() {
