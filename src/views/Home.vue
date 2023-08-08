@@ -12,7 +12,14 @@ import offersApiClient from "@/services/OffersApiClient.js"
       </v-col>
     </v-row>
 
-    <template v-if="loading">
+    <template v-if="state == 'error'">
+      <v-row>
+        <v-col cols="12">
+          <p class="text-center">¡Ups! Hubo un error al recuperar las ofertas. Refresca la página para intentarlo de nuevo.</p>
+        </v-col>
+      </v-row>
+    </template>
+    <template v-if="state == 'loading'">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </template>
     <template v-else>
@@ -28,16 +35,6 @@ import offersApiClient from "@/services/OffersApiClient.js"
             :createdAt="formatDate(offer.createdAt)"
             >
           </Card>
-        </v-col>
-      </v-row>
-
-      <!-- Pagination buttons -->
-      <v-row justify="center">
-        <v-col cols="12" class="text-center">
-          <v-btn-group>
-            <v-btn @click="previousPage" :disabled="currentPage === 1">Anterior</v-btn>
-            <v-btn @click="nextPage" :disabled="currentPage === totalPages">Siguiente</v-btn>
-          </v-btn-group>
         </v-col>
       </v-row>
     </template>
@@ -56,7 +53,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      state: 'loading',
       offers: [],
       itemsPerPage: 10,
       currentPage: 1,
@@ -80,11 +77,11 @@ export default {
       try {
         const offers = await offersApiClient.fetchActiveOffers()
         this.offers = offers
+        this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
         console.error("Couldn't get offers:", error);
-      } finally {
-        this.loading = false;
+        this.state = 'error'
       }
     },
     formatDate(dateString) {
