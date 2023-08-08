@@ -19,7 +19,7 @@ import offersApiClient from "@/services/OffersApiClient.js"
         </v-col>
       </v-row>
     </template>
-    <template v-if="state == 'loading'">
+    <template v-else-if="state == 'loading'">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </template>
     <template v-else>

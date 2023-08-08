@@ -1,7 +1,14 @@
 <template>
   <v-container>
     <h1>Ofertas</h1>
-    <template v-if="loading">
+    <template v-if="state == 'error'">
+      <v-row>
+        <v-col cols="12">
+          <p class="text-center">¡Ups! Hubo un error al recuperar las ofertas. Refresca la página para intentarlo de nuevo.</p>
+        </v-col>
+      </v-row>
+    </template>
+    <template v-else-if="state == 'loading'">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </template>
     <template v-else>
@@ -66,7 +73,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      state: 'loading',
       offers: [],
     };
   },
@@ -86,11 +93,11 @@ export default {
       try {
         const offers = await offersApiClient.fetchAllOffers(accessToken)
         this.offers = offers;
+        this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
         console.error("Couldn't get offers:", error);
-      } finally {
-        this.loading = false;
+        this.state = 'error';
       }
     },
   },
