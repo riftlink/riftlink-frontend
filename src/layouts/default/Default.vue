@@ -1,11 +1,3 @@
-<script setup>
-  import DefaultView from './View.vue'
-
-  import { useAuth0 } from '@auth0/auth0-vue';
-
-  const { logout, user, isAuthenticated } = useAuth0();
-</script>
-
 <template>
   <v-navigation-drawer v-model="drawer">
     <v-toolbar flat>
@@ -21,13 +13,13 @@
         </template>
         <router-link to="/"><v-list-item-title>Ofertas</v-list-item-title></router-link>
       </v-list-item>
-      <v-list-item>
+      <v-list-item v-if="isAuthenticated">
         <template v-slot:prepend>
           <v-icon>mdi-send</v-icon>
         </template>
         <router-link to="/profile"><v-list-item-title>Mi perfil</v-list-item-title></router-link>
       </v-list-item>
-      <v-list-item>
+      <v-list-item v-if="isAuthenticated">
         <template v-slot:prepend>
           <v-icon>mdi-account-hard-hat</v-icon>
         </template>
@@ -62,7 +54,7 @@
         </template>
         <template v-else>
           <div class="pa-2">
-            <router-link to="/login"><v-btn block>Login</v-btn></router-link>
+            <v-btn @click="login" block>Login</v-btn>
           </div>
         </template>
       </v-sheet>
@@ -76,16 +68,31 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        drawer: null
-      }
+import DefaultView from './View.vue'
+
+import { useAuth0 } from '@auth0/auth0-vue';
+
+export default {
+  components: {
+    DefaultView
+  },
+  data() {
+    return {
+      drawer: null
+    }
+  },
+  setup() {
+    const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+
+    return { loginWithRedirect, logout, user, isAuthenticated }
+  },
+  methods: {
+    login() {
+      this.loginWithRedirect();
     },
-    methods: {
-      logout() {
-        logout({ logoutParams: { returnTo: window.location.origin }})
-      }
+    logout() {
+      this.logout({ logoutParams: { returnTo: window.location.origin }})
     }
   }
+}
 </script>

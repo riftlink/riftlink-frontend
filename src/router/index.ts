@@ -25,10 +25,6 @@ const routes = [
     ],
   },
   {
-    path: '/login',
-    component: () => import('@/layouts/default/Login.vue')
-  },
-  {
     path: '/profile',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
