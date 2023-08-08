@@ -37,7 +37,6 @@
 
     <template v-slot:append v-if="isAuthenticated">
       <v-divider></v-divider>
-
       <v-sheet
         color="grey-lighten-4"
         class="pa-4"
@@ -58,6 +57,17 @@
           <v-btn @click="logout" block>
             Logout
           </v-btn>
+        </div>
+      </v-sheet>
+    </template>
+    <template v-slot:append v-else>
+      <v-divider></v-divider>
+      <v-sheet
+        color="grey-lighten-4"
+        class="pa-4"
+      >
+        <div class="pa-2">
+          <router-link to="/login"><v-btn block>Login</v-btn></router-link>
         </div>
       </v-sheet>
     </template>
