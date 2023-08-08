@@ -5,28 +5,43 @@ import offersApiClient from "@/services/OffersApiClient.js"
 
 <template>
   <v-container>
+    <!-- Header -->
     <v-row justify="center">
-      <v-col cols="12" md="8" v-for="offer in offers" :key="offer.id">
-        <Card
-          :id="offer.id"
-          :logo="offer.logoUrl"
-          :teamName="offer.teamName"
-          :positionName="offer.positionName"
-          :rank="offer.rank"
-          :createdAt="formatDate(offer.createdAt)"
-          >
-        </Card>
+      <v-col cols="12">
+        <h2 class="text-center">Ofertas</h2>
       </v-col>
     </v-row>
 
-    <v-row justify="center">
-      <v-col cols="12" class="text-center">
-        <v-btn-group>
-          <v-btn @click="previousPage" :disabled="currentPage === 1">Anterior</v-btn>
-          <v-btn @click="nextPage" :disabled="currentPage === totalPages">Siguiente</v-btn>
-        </v-btn-group>
-      </v-col>
-    </v-row>
+    <template v-if="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </template>
+    <template v-else>
+      <!-- Offers -->
+      <v-row justify="center">
+        <v-col cols="12" md="8" v-for="offer in offers" :key="offer.id">
+          <Card
+            :id="offer.id"
+            :logo="offer.logoUrl"
+            :teamName="offer.teamName"
+            :positionName="offer.positionName"
+            :rank="offer.rank"
+            :createdAt="formatDate(offer.createdAt)"
+            >
+          </Card>
+        </v-col>
+      </v-row>
+
+      <!-- Pagination buttons -->
+      <v-row justify="center">
+        <v-col cols="12" class="text-center">
+          <v-btn-group>
+            <v-btn @click="previousPage" :disabled="currentPage === 1">Anterior</v-btn>
+            <v-btn @click="nextPage" :disabled="currentPage === totalPages">Siguiente</v-btn>
+          </v-btn-group>
+        </v-col>
+      </v-row>
+    </template>
+
   </v-container>
 
   <Alert ref="alert" />
