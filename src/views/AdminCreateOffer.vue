@@ -98,14 +98,21 @@
     </v-row>
 
   </v-container>
+
+  <Alert ref="alert" />
 </template>
 
 <script>
+import Alert from '@/components/Alert.vue';
+
 import { useAuth0 } from '@auth0/auth0-vue';
 
 import offersApiClient from "@/services/OffersApiClient.js"
 
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
       loading: true,
@@ -133,10 +140,10 @@ export default {
       try {
         const accessToken = await this.getAccessTokenSilently()
         await offersApiClient.createOffer(accessToken, this.offer)
-        console.log("Creada con éxito!!")
         this.$router.push('/admin/offers');
       } catch (error) {
-        console.error("Error al guardar el los detalles de la oferta:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un problema al crear la oferta.")
+        console.error("Couldn't save offer:", error);
       }
     },
   },

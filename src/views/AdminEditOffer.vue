@@ -2,7 +2,14 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <template v-if="loading">
+        <template v-if="state == 'error'">
+          <v-row>
+            <v-col cols="12">
+              <p class="text-center">¡Ups! Hubo un error al recuperar la oferta. Refresca la página para intentarlo de nuevo.</p>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-else-if="state == 'loading'">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </template>
         <template v-else>
@@ -91,29 +98,34 @@
                 label="Activa"></v-checkbox>
             </v-col>
           </v-card>
+
+          <!-- Save Button -->
+          <v-row justify="center">
+            <v-col cols="12" sm="8" md="6">
+              <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
+            </v-col>
+          </v-row>
         </template>
       </v-col>
     </v-row>
-
-    <!-- Save Button -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
-      </v-col>
-    </v-row>
-
   </v-container>
+
+  <Alert ref="alert" />
 </template>
 
 <script>
+import Alert from '@/components/Alert.vue';
 import offersApiClient from "@/services/OffersApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
-      loading: true,
+      state: 'loading',
       offer: null,
     };
   },
@@ -133,10 +145,11 @@ export default {
         const offerId = this.$route.params.id
         const offer = await offersApiClient.fetchOffer(offerId)
         this.offer = offer;
+        this.state = 'ok'
       } catch (error) {
-        console.error("Error al obtener la oferta de empleo:", error);
-      } finally {
-        this.loading = false;
+        this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar la oferta.")
+        console.error("Couldn't get offer:", error);
+        this.state = 'error'
       }
     },
     async saveOffer() {
@@ -144,9 +157,10 @@ export default {
       const accessToken = await this.getAccessTokenSilently()
       try {
         await offersApiClient.saveOffer(accessToken, offerId, this.offer)
-        console.log("Guardado con éxito!!")
+        this.$refs.alert.alertSuccess("¡Guardado con éxito!")
       } catch (error) {
-        console.error("Error al guardar el los detalles de la oferta:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar la oferta.")
+        console.error("Couldn't save offer:", error);
       }
     },
   },
