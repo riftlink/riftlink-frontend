@@ -121,11 +121,6 @@ export default {
     return {
       loading: true,
       offer: null,
-      alert: {
-        visible: false,
-        text: '',
-        color: ''
-      }
     };
   },
   setup() {
@@ -145,7 +140,8 @@ export default {
         const offer = await offersApiClient.fetchOffer(offerId)
         this.offer = offer;
       } catch (error) {
-        console.error("Error al obtener la oferta de empleo:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar la oferta.")
+        console.error("Couldn't get offer:", error);
       } finally {
         this.loading = false;
       }

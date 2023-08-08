@@ -28,10 +28,17 @@ import offersApiClient from "@/services/OffersApiClient.js"
       </v-col>
     </v-row>
   </v-container>
+
+  <Alert ref="alert" />
 </template>
 
 <script>
+import Alert from '@/components/Alert.vue';
+
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
       loading: true,
@@ -59,7 +66,8 @@ export default {
         const offers = await offersApiClient.fetchActiveOffers()
         this.offers = offers
       } catch (error) {
-        console.error("Error al obtener las ofertas de empleo:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
+        console.error("Couldn't get offers:", error);
       } finally {
         this.loading = false;
       }
