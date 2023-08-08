@@ -35,40 +35,36 @@
       </v-list-item>
     </v-list>
 
-    <template v-slot:append v-if="isAuthenticated">
+    <template v-slot:append>
       <v-divider></v-divider>
       <v-sheet
         color="grey-lighten-4"
         class="pa-4"
       >
-        <v-avatar
-          class="mb-4"
-          color="grey-darken-1"
-          size="64"
-        >
-          <v-img
-            alt="Avatar"
-            :src="user.picture"></v-img>
-        </v-avatar>
+        <template v-if="isAuthenticated">
+          <v-avatar
+            class="mb-4"
+            color="grey-darken-1"
+            size="64"
+          >
+            <v-img
+              alt="Avatar"
+              :src="user.picture"></v-img>
+          </v-avatar>
 
-        <div>{{ user.nickname }}</div>
+          <div>{{ user.nickname }}</div>
 
-        <div class="pa-2">
-          <v-btn @click="logout" block>
-            Logout
-          </v-btn>
-        </div>
-      </v-sheet>
-    </template>
-    <template v-slot:append v-else>
-      <v-divider></v-divider>
-      <v-sheet
-        color="grey-lighten-4"
-        class="pa-4"
-      >
-        <div class="pa-2">
-          <router-link to="/login"><v-btn block>Login</v-btn></router-link>
-        </div>
+          <div class="pa-2">
+            <v-btn @click="logout" block>
+              Logout
+            </v-btn>
+          </div>
+        </template>
+        <template v-else>
+          <div class="pa-2">
+            <router-link to="/login"><v-btn block>Login</v-btn></router-link>
+          </div>
+        </template>
       </v-sheet>
     </template>
 
