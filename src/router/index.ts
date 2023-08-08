@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import { authGuard } from '@auth0/auth0-vue';
 
 const routes = [
   {
@@ -34,6 +35,7 @@ const routes = [
         component: () => import('@/views/UserProfileEdit.vue'),
       },
     ],
+    beforeEnter: authGuard,
   },
   {
     path: '/admin/offers',
@@ -45,6 +47,7 @@ const routes = [
         component: () => import('@/views/AdminOffers.vue'),
       },
     ],
+    beforeEnter: authGuard,
   },
   {
     path: '/admin/offers/:id',
@@ -56,6 +59,7 @@ const routes = [
         component: () => import('@/views/AdminEditOffer.vue'),
       },
     ],
+    beforeEnter: authGuard,
   },
   {
     path: '/admin/offers/new',
@@ -67,6 +71,7 @@ const routes = [
         component: () => import('@/views/AdminCreateOffer.vue'),
       },
     ],
+    beforeEnter: authGuard,
   },
 ]
 
