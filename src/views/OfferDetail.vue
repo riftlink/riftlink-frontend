@@ -83,9 +83,7 @@
       <v-card>
         <v-card-text class="text-center">
           <div class="headline">¡Crea tu perfil en un momento y aplica a esta oferta y muchas más!</div>
-          <router-link to="/login">
-            <v-btn color="primary">Vamos a ello</v-btn>
-          </router-link>
+          <v-btn @click="login" color="primary">Vamos a ello</v-btn>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -129,8 +127,8 @@ export default {
     await this.fetchOffer();
   },
   setup() {
-    const { isAuthenticated } = useAuth0();
-    return { isAuthenticated }
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
+    return { isAuthenticated, loginWithRedirect }
   },
   methods: {
     async fetchOffer() {
@@ -144,6 +142,9 @@ export default {
         console.error("Couldn't get offer:", error);
         this.state = 'error'
       }
+    },
+    login() {
+      this.loginWithRedirect();
     },
     onApplyClick() {
       if (!this.isAuthenticated) {

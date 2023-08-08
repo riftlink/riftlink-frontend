@@ -102,7 +102,7 @@ export default {
     };
   },
   setup() {
-    const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+    const { loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
 
     return {
       isAuthenticated,
@@ -118,7 +118,7 @@ export default {
   methods: {
     async fetchUser() {
       if (!this.isAuthenticated) {
-        this.$router.push('/login');
+        this.loginWithRedirect();
         return
       }
       const accessToken = await this.getAccessTokenSilently()
