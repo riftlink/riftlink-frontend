@@ -60,6 +60,24 @@
       </v-col>
     </v-row>
   </v-container>
+
+  <v-snackbar
+      v-model="alert.visible"
+      :color="alert.color"
+      variant="elevated"
+      location="top end"
+      :timeout="5000"
+    >
+      {{ alert.text }}
+
+      <template v-slot:actions>
+        <v-btn
+          @click="alert.visible = false"
+        >
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
 </template>
 
 <script>
@@ -73,7 +91,12 @@ export default {
       username: "",
       avatarUrl: "",
       summonerName: "",
-      aboutMe: ""
+      aboutMe: "",
+      alert: {
+        visible: false,
+        text: '',
+        color: ''
+      }
     };
   },
   setup() {
@@ -114,11 +137,16 @@ export default {
           aboutMe: this.aboutMe
         }
         await usersApiClient.saveCurrentUser(accessToken, user)
-        console.log("Guardado con éxito!!")
+        this.alertSuccess('¡Guardado con éxito!')
       } catch (error) {
         console.error("Error al guardar el perfil del usuario:", error);
       }
     },
+    alertSuccess(message) {
+      this.alert.text = message
+      this.alert.color = 'success'
+      this.alert.visible = true
+    }
   },
 };
 </script>
