@@ -103,6 +103,24 @@
     </v-row>
 
   </v-container>
+
+  <v-snackbar
+      v-model="alert.visible"
+      :color="alert.color"
+      variant="elevated"
+      location="top end"
+      :timeout="5000"
+    >
+    {{ alert.text }}
+
+    <template v-slot:actions>
+      <v-btn
+        @click="alert.visible = false"
+      >
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -115,6 +133,11 @@ export default {
     return {
       loading: true,
       offer: null,
+      alert: {
+        visible: false,
+        text: '',
+        color: ''
+      }
     };
   },
   setup() {
@@ -144,11 +167,16 @@ export default {
       const accessToken = await this.getAccessTokenSilently()
       try {
         await offersApiClient.saveOffer(accessToken, offerId, this.offer)
-        console.log("Guardado con éxito!!")
+        this.alertSuccess("¡Guardado con éxito!")
       } catch (error) {
         console.error("Error al guardar el los detalles de la oferta:", error);
       }
     },
+    alertSuccess(message) {
+      this.alert.text = message
+      this.alert.color = 'success'
+      this.alert.visible = true
+    }
   },
 };
 </script>

@@ -133,7 +133,6 @@ export default {
       try {
         const accessToken = await this.getAccessTokenSilently()
         await offersApiClient.createOffer(accessToken, this.offer)
-        console.log("Creada con éxito!!")
         this.$router.push('/admin/offers');
       } catch (error) {
         console.error("Error al guardar el los detalles de la oferta:", error);

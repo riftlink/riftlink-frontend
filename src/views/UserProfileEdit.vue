@@ -68,16 +68,16 @@
       location="top end"
       :timeout="5000"
     >
-      {{ alert.text }}
+    {{ alert.text }}
 
-      <template v-slot:actions>
-        <v-btn
-          @click="alert.visible = false"
-        >
-          Cerrar
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <template v-slot:actions>
+      <v-btn
+        @click="alert.visible = false"
+      >
+        Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -122,7 +122,6 @@ export default {
       const accessToken = await this.getAccessTokenSilently()
       try {
         const userData = await usersApiClient.fetchCurrentUser(accessToken)
-        console.log(userData)
         this.summonerName = userData.summonerName;
         this.aboutMe = userData.aboutMe;
       } catch (err) {
