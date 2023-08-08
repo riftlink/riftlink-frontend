@@ -169,14 +169,20 @@ export default {
         await offersApiClient.saveOffer(accessToken, offerId, this.offer)
         this.alertSuccess("¡Guardado con éxito!")
       } catch (error) {
-        console.error("Error al guardar el los detalles de la oferta:", error);
+        this.alertError("¡Ups! Hubo un error al guardar la oferta.")
+        console.error("Couldn't save offer:", error);
       }
     },
     alertSuccess(message) {
       this.alert.text = message
       this.alert.color = 'success'
       this.alert.visible = true
-    }
+    },
+    alertError(message) {
+      this.alert.text = message
+      this.alert.color = 'error'
+      this.alert.visible = true
+    },
   },
 };
 </script>
