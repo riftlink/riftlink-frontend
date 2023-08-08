@@ -7,7 +7,14 @@
       </v-col>
     </v-row>
 
-    <template v-if="loading">
+    <template v-if="state == 'error'">
+      <v-row>
+        <v-col cols="12">
+          <p class="text-center">¡Ups! Hubo un error al recuperar tu perfil. Refresca la página para intentarlo de nuevo.</p>
+        </v-col>
+      </v-row>
+    </template>
+    <template v-else-if="state == 'loading'">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </template>
     <template v-else>
@@ -82,7 +89,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      state: 'loading',
       username: "",
       avatarUrl: "",
       summonerName: "",
@@ -119,11 +126,11 @@ export default {
         const userData = await usersApiClient.fetchCurrentUser(accessToken)
         this.summonerName = userData.summonerName;
         this.aboutMe = userData.aboutMe;
+        this.state = 'ok'
       } catch (err) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar tu perfil.")
         console.error("Couldn't get current user profile:", err);
-      } finally {
-        this.loading = false
+        this.state = 'error'
       }
     },
     async saveProfile() {
