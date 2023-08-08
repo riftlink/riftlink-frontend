@@ -87,19 +87,34 @@
       </v-card>
     </v-dialog>
   </v-container>
+
+  <Alert ref="alert" />
 </template>
 
 <script>
+import Alert from '@/components/Alert.vue';
+
 import offersApiClient from "@/services/OffersApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
       loading: true,
       lightboxOpen: false,
-      offer: null,
+      offer: {
+        teamName: '',
+        positionName: '',
+        rank: '',
+        logoUrl: '',
+        applyUrl: '',
+        requirements: '',
+        aboutUs: '',
+      },
       isAuthenticated: null,
     };
   },
@@ -117,7 +132,8 @@ export default {
         const offer = await offersApiClient.fetchOffer(offerId)
         this.offer = offer;
       } catch (error) {
-        console.error("Error al obtener la oferta de empleo:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar la oferta.")
+        console.error("Couldn't get offer:", error);
       } finally {
         this.loading = false;
       }
