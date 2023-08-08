@@ -2,7 +2,14 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <template v-if="loading">
+        <template v-if="state == 'error'">
+          <v-row>
+            <v-col cols="12">
+              <p class="text-center">¡Ups! Hubo un error al recuperar la oferta. Refresca la página para intentarlo de nuevo.</p>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-else-if="state == 'loading'">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </template>
         <template v-else>
@@ -91,17 +98,16 @@
                 label="Activa"></v-checkbox>
             </v-col>
           </v-card>
+
+          <!-- Save Button -->
+          <v-row justify="center">
+            <v-col cols="12" sm="8" md="6">
+              <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
+            </v-col>
+          </v-row>
         </template>
       </v-col>
     </v-row>
-
-    <!-- Save Button -->
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
-      </v-col>
-    </v-row>
-
   </v-container>
 
   <Alert ref="alert" />
@@ -119,7 +125,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      state: 'loading',
       offer: null,
     };
   },
@@ -139,11 +145,11 @@ export default {
         const offerId = this.$route.params.id
         const offer = await offersApiClient.fetchOffer(offerId)
         this.offer = offer;
+        this.state = 'ok'
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar la oferta.")
         console.error("Couldn't get offer:", error);
-      } finally {
-        this.loading = false;
+        this.state = 'error'
       }
     },
     async saveOffer() {
