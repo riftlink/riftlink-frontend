@@ -61,31 +61,20 @@
     </v-row>
   </v-container>
 
-  <v-snackbar
-      v-model="alert.visible"
-      :color="alert.color"
-      variant="elevated"
-      location="top end"
-      :timeout="5000"
-    >
-    {{ alert.text }}
-
-    <template v-slot:actions>
-      <v-btn
-        @click="alert.visible = false"
-      >
-        Cerrar
-      </v-btn>
-    </template>
-  </v-snackbar>
+  <Alert ref="alert" />
 </template>
 
 <script>
+import Alert from '@/components/Alert.vue';
+
 import usersApiClient from "@/services/UsersApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
       username: "",
@@ -125,7 +114,8 @@ export default {
         this.summonerName = userData.summonerName;
         this.aboutMe = userData.aboutMe;
       } catch (err) {
-        console.error("Error al obtener el perfil del usuario:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar tu perfil.")
+        console.error("Couldn't get current user profile:", err);
       }
     },
     async saveProfile() {
@@ -136,16 +126,12 @@ export default {
           aboutMe: this.aboutMe
         }
         await usersApiClient.saveCurrentUser(accessToken, user)
-        this.alertSuccess('¡Guardado con éxito!')
+        this.$refs.alert.alertSuccess('¡Guardado con éxito!')
       } catch (error) {
-        console.error("Error al guardar el perfil del usuario:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar tu perfil.")
+        console.error("Couldn't save current user profile:", error);
       }
     },
-    alertSuccess(message) {
-      this.alert.text = message
-      this.alert.color = 'success'
-      this.alert.visible = true
-    }
   },
 };
 </script>
