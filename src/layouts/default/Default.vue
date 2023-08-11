@@ -19,12 +19,6 @@
         </template>
         <router-link to="/profile"><v-list-item-title>Mi perfil</v-list-item-title></router-link>
       </v-list-item>
-      <v-list-item v-if="isAuthenticated">
-        <template v-slot:prepend>
-          <v-icon>mdi-account-hard-hat</v-icon>
-        </template>
-        <router-link to="/admin/offers"><v-list-item-title>Admin</v-list-item-title></router-link>
-      </v-list-item>
     </v-list>
 
     <template v-slot:append>

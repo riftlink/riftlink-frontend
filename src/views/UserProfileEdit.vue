@@ -102,10 +102,9 @@ export default {
     };
   },
   setup() {
-    const { loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+    const { user, getAccessTokenSilently } = useAuth0();
 
     return {
-      isAuthenticated,
       user,
       getAccessTokenSilently,
       username: user.value.nickname,
@@ -117,10 +116,6 @@ export default {
   },
   methods: {
     async fetchUser() {
-      if (!this.isAuthenticated) {
-        this.loginWithRedirect();
-        return
-      }
       const accessToken = await this.getAccessTokenSilently()
       try {
         const userData = await usersApiClient.fetchCurrentUser(accessToken)
