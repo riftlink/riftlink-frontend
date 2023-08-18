@@ -48,7 +48,7 @@
                   <v-avatar
                     class="mb-4"
                     color="grey-darken-1"
-                    size="64"
+                    size="128"
                   >
                     <v-img
                       alt="Avatar"

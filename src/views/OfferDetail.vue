@@ -13,44 +13,49 @@
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </template>
         <template v-else>
-          <v-card>
-            <v-card-title>
-              <v-avatar size="64">
-                <img :src="offer.logoUrl" alt="Logo" />
-              </v-avatar>
-              <div>
-                <span class="headline">{{ offer.positionName }}</span>
-              </div>
-            </v-card-title>
+          <!-- Back Button -->
+          <v-row>
+            <v-col cols="12" sm="8" md="6">
+              <router-link to="/"><i class="mdi mdi-arrow-left"></i> Volver a ofertas</router-link>
+            </v-col>
+          </v-row>
 
-            <v-card-subtitle>
-              <div>
-                <span class="subtitle">{{ offer.teamName }}</span>
-              </div>
-            </v-card-subtitle>
+          <!-- Header -->
+          <v-row class="mb-3" justify="center">
+            <v-col cols="12">
+              <h2>{{ offer.positionName }} para {{ offer.teamName }}</h2>
+            </v-col>
+          </v-row>
 
-            <v-card-text>
-              <v-row key="rank" class="pa-2">
-                <v-col cols="5">
-                  <span class="caption">Rank</span>
-                </v-col>
-                <v-col cols="5">
-                  <span class="body-1">{{ offer.rank }}</span>
-                </v-col>
-              </v-row>
+          <!-- Detail card -->
+          <v-card class="mb-3">
+            <v-row class="my-3" no-gutters align="center">
+              <v-col cols="2">
+                <v-card-title>
+                  <v-avatar size="128">
+                    <v-img cover :src="offer.logoUrl" alt="{{ offer.teamName }} Logo" />
+                  </v-avatar>
+                </v-card-title>
+              </v-col>
+              <v-col>
+                <v-card-text>
+                  <p class="caption">Club: {{ offer.teamName }}</p>
+                  <p class="caption">Posición: {{ offer.positionName }}</p>
+                  <p class="caption">Rango requerido: {{ offer.rank }}</p>
+                </v-card-text>
+              </v-col>
+              <v-col>
+                <v-card-text>
+                  <p class="caption text-end">Publicada el: {{ formatDate(offer.createdAt) }}</p>
+                </v-card-text>
+              </v-col>
+            </v-row>
+          </v-card>
 
-              <v-row key="createdAt" class="pa-2">
-                <v-col cols="5">
-                  <span class="caption">Created at</span>
-                </v-col>
-                <v-col cols="5">
-                  <span class="body-1">{{ offer.createdAt }}</span>
-                </v-col>
-              </v-row>
-            </v-card-text>
-
-            <v-expansion-panels multiple>
-              <v-expansion-panel>
+          <!-- Requirements -->
+          <v-card class="mb-3">
+            <v-expansion-panels>
+              <v-expansion-panel elevation="0">
                 <v-expansion-panel-title>
                   Qué pedimos
                 </v-expansion-panel-title>
@@ -58,7 +63,13 @@
                   <p class="pa-2">{{ offer.requirements }}</p>
                 </v-expansion-panel-text>
               </v-expansion-panel>
-              <v-expansion-panel>
+            </v-expansion-panels>
+          </v-card>
+
+          <!-- About us -->
+          <v-card class="mb-3">
+            <v-expansion-panels>
+              <v-expansion-panel elevation="0">
                 <v-expansion-panel-title>
                   Qué ofrecemos
                 </v-expansion-panel-title>
@@ -67,14 +78,11 @@
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="onApplyClick">
-                Aplicar
-              </v-btn>
-            </v-card-actions>
           </v-card>
+
+          <v-btn class="mt-3" :style="{left: '50%', transform:'translateX(-50%)'}" min-width="10rem" color="primary" @click="onApplyClick">
+            Aplicar
+          </v-btn>
         </template>
       </v-col>
     </v-row>
@@ -155,6 +163,10 @@ export default {
     },
     closeLightbox() {
       this.lightboxOpen = false;
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString();
     },
   },
 };

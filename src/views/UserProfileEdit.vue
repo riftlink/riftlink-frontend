@@ -2,75 +2,67 @@
   <v-container>
     <!-- Header -->
     <v-row justify="center">
-      <v-col cols="12">
-        <h2 class="text-center">Mi perfil</h2>
+      <v-col cols="12" md="6">
+        <h2>Mi perfil</h2>
+
+        <template v-if="state == 'error'">
+          <v-row>
+            <v-col cols="12">
+              <p class="text-center">¡Ups! Hubo un error al recuperar tu perfil. Refresca la página para intentarlo de nuevo.</p>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-else-if="state == 'loading'">
+          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </template>
+        <template v-else>
+          <!-- Avatar and Username Component -->
+          <v-row class="my-3" justify="center" align="center">
+            <v-col cols="12" sm="2">
+              <v-avatar
+                class="mb-4"
+                color="grey-darken-1"
+                size="96"
+              >
+                <v-img
+                  alt="Avatar"
+                  :src="avatarUrl"></v-img>
+              </v-avatar>
+            </v-col>
+            <v-col cols="12" sm="10">
+              <v-text-field
+                v-model="username"
+                label="Nombre de usuario"
+                outlined
+                disabled
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <!-- Summoner name Field -->
+          <v-row justify="center">
+            <v-col>
+              <v-text-field v-model="summonerName" label="Nombre de invocador" outlined></v-text-field>
+            </v-col>
+          </v-row>
+
+          <!-- About me Field -->
+          <v-row justify="center">
+            <v-col>
+              <v-textarea
+                v-model="aboutMe"
+                label="Sobre mí"
+                outlined
+                rows="3"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+
+          <!-- Save Button -->
+          <v-btn class="mt-3" :style="{left: '50%', transform:'translateX(-50%)'}" min-width="10rem" color="primary" @click="saveProfile">Guardar</v-btn>
+        </template>
       </v-col>
     </v-row>
-
-    <template v-if="state == 'error'">
-      <v-row>
-        <v-col cols="12">
-          <p class="text-center">¡Ups! Hubo un error al recuperar tu perfil. Refresca la página para intentarlo de nuevo.</p>
-        </v-col>
-      </v-row>
-    </template>
-    <template v-else-if="state == 'loading'">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </template>
-    <template v-else>
-      <!-- Avatar Component -->
-      <v-row justify="center">
-        <v-col cols="12" sm="8" md="6">
-          <v-avatar
-            class="mb-4"
-            color="grey-darken-1"
-            size="64"
-          >
-            <v-img
-              alt="Avatar"
-              :src="avatarUrl"></v-img>
-          </v-avatar>
-        </v-col>
-      </v-row>
-
-      <!-- Username Field -->
-      <v-row justify="center">
-        <v-col cols="12" sm="8" md="6">
-          <v-text-field
-            v-model="username"
-            label="Nombre de usuario"
-            outlined
-            disabled
-          ></v-text-field>
-        </v-col>
-      </v-row>
-
-      <!-- Summoner name Field -->
-      <v-row justify="center">
-        <v-col cols="12" sm="8" md="6">
-          <v-text-field v-model="summonerName" label="Nombre de invocador" outlined></v-text-field>
-        </v-col>
-      </v-row>
-
-      <!-- About me Field -->
-      <v-row justify="center">
-        <v-col cols="12" sm="8" md="6">
-          <v-textarea
-            v-model="aboutMe"
-            label="Sobre mí"
-            outlined
-            rows="3"
-          ></v-textarea>
-        </v-col>
-      </v-row>
-
-      <!-- Save Button -->
-      <v-row justify="center">
-        <v-col cols="12" sm="8" md="6">
-          <v-btn block color="primary" @click="saveProfile">Guardar</v-btn>
-        </v-col>
-      </v-row>
-    </template>
   </v-container>
 
   <Alert ref="alert" />

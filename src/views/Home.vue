@@ -6,9 +6,9 @@ import offersApiClient from "@/services/OffersApiClient.js"
 <template>
   <v-container>
     <!-- Header -->
-    <v-row>
-      <v-col cols="12">
-        <h2 class="text-center">Ofertas</h2>
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <h2>Ofertas</h2>
       </v-col>
     </v-row>
 
@@ -38,7 +38,6 @@ import offersApiClient from "@/services/OffersApiClient.js"
         </v-col>
       </v-row>
     </template>
-
   </v-container>
 
   <Alert ref="alert" />
