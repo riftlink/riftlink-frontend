@@ -19,30 +19,34 @@
     </v-list>
 
     <template v-slot:append>
-      <v-sheet class="pa-4">
+      <v-sheet>
         <template v-if="isAuthenticated">
-          <v-avatar
-            class="mb-4"
-            color="grey-darken-1"
-            size="64"
-          >
-            <v-img
-              alt="Avatar"
-              :src="user.picture"></v-img>
-          </v-avatar>
+          <v-list>
+            <v-list-item>
+              <v-avatar size="64">
+                <v-img
+                  alt="Avatar"
+                  :src="user.picture"></v-img>
+              </v-avatar>
+            </v-list-item>
+            <v-list-item>
+              <p>{{ user.nickname }}</p>
+            </v-list-item>
+            <v-list-item>
+              <v-btn color="primary" @click="logout" block>
+                Logout
+              </v-btn>
+            </v-list-item>
+          </v-list>
 
-          <div>{{ user.nickname }}</div>
 
-          <div class="pa-2">
-            <v-btn @click="logout" block>
-              Logout
-            </v-btn>
-          </div>
         </template>
         <template v-else>
-          <div class="pa-2">
-            <v-btn color="primary" @click="login" block>Login</v-btn>
-          </div>
+          <v-list>
+            <v-list-item>
+              <v-btn color="primary" @click="login" block>Login</v-btn>
+            </v-list-item>
+          </v-list>
         </template>
       </v-sheet>
     </template>
