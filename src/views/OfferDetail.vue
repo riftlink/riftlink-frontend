@@ -89,14 +89,14 @@
 
     <v-dialog v-model="lightboxOpen" max-width="500px">
       <v-card>
-        <v-card-text class="text-center">
-          <div class="headline">¡Crea tu perfil en un momento y aplica a esta oferta y muchas más!</div>
-          <v-btn @click="login" color="primary">Vamos a ello</v-btn>
-        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="closeLightbox">Cerrar</v-btn>
+          <v-btn @click="closeLightbox"><v-icon>mdi-close</v-icon></v-btn>
         </v-card-actions>
+        <v-card-text class="text-center">
+          <div class="headline mb-3">¡Crea tu perfil en un momento y aplica a esta oferta y muchas más!</div>
+          <v-btn class="mt-3 mb-12" @click="login" color="primary">Vamos a ello</v-btn>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </v-container>
