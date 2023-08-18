@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer">
+  <v-navigation-drawer floating permanent v-model="drawer">
     <v-list>
       <v-list-item>
         <img src="/assets/img/logo.png" alt="Riftlink" />
@@ -87,3 +87,6 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>
