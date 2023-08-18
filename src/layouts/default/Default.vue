@@ -1,55 +1,52 @@
 <template>
-  <v-navigation-drawer v-model="drawer">
-    <v-toolbar flat>
-      <v-toolbar-title>Riftlink</v-toolbar-title>
-    </v-toolbar>
-
-    <v-divider></v-divider>
-
+  <v-navigation-drawer floating permanent v-model="drawer">
     <v-list>
       <v-list-item>
+        <img src="/assets/img/logo.png" alt="Riftlink" />
+      </v-list-item>
+      <v-list-item>
         <template v-slot:prepend>
-          <v-icon>mdi-inbox-arrow-down</v-icon>
+          <v-icon>mdi-list-box</v-icon>
         </template>
         <router-link to="/"><v-list-item-title>Ofertas</v-list-item-title></router-link>
       </v-list-item>
       <v-list-item v-if="isAuthenticated">
         <template v-slot:prepend>
-          <v-icon>mdi-send</v-icon>
+          <v-icon>mdi-account</v-icon>
         </template>
         <router-link to="/profile"><v-list-item-title>Mi perfil</v-list-item-title></router-link>
       </v-list-item>
     </v-list>
 
     <template v-slot:append>
-      <v-divider></v-divider>
-      <v-sheet
-        color="grey-lighten-4"
-        class="pa-4"
-      >
+      <v-sheet>
         <template v-if="isAuthenticated">
-          <v-avatar
-            class="mb-4"
-            color="grey-darken-1"
-            size="64"
-          >
-            <v-img
-              alt="Avatar"
-              :src="user.picture"></v-img>
-          </v-avatar>
+          <v-list>
+            <v-list-item>
+              <v-avatar size="64">
+                <v-img
+                  alt="Avatar"
+                  :src="user.picture"></v-img>
+              </v-avatar>
+            </v-list-item>
+            <v-list-item>
+              <p>{{ user.nickname }}</p>
+            </v-list-item>
+            <v-list-item>
+              <v-btn color="primary" @click="logout" block>
+                Logout
+              </v-btn>
+            </v-list-item>
+          </v-list>
 
-          <div>{{ user.nickname }}</div>
 
-          <div class="pa-2">
-            <v-btn @click="logout" block>
-              Logout
-            </v-btn>
-          </div>
         </template>
         <template v-else>
-          <div class="pa-2">
-            <v-btn @click="login" block>Login</v-btn>
-          </div>
+          <v-list>
+            <v-list-item>
+              <v-btn color="primary" @click="login" block>Login</v-btn>
+            </v-list-item>
+          </v-list>
         </template>
       </v-sheet>
     </template>
@@ -90,3 +87,6 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>

@@ -1,45 +1,26 @@
 <template>
   <v-card>
-    <v-card-title>
-      <v-avatar size="64">
-        <img :src="logo" alt="Logo" />
-      </v-avatar>
-      <div>
-        <span class="headline">{{ positionName }}</span>
-      </div>
-    </v-card-title>
-
-    <v-card-subtitle>
-      <div>
-        <span class="subtitle">{{ teamName }}</span>
-      </div>
-    </v-card-subtitle>
-
-    <v-card-text>
-      <v-row key="rank" class="pa-2">
-        <v-col cols="2">
-          <!--<v-icon>{{ field.icon }}</v-icon>-->
-        </v-col>
-        <v-col cols="5">
-          <span class="caption">Rank</span>
-        </v-col>
-        <v-col cols="5">
-          <span class="body-1">{{ rank }}</span>
-        </v-col>
-      </v-row>
-
-      <v-row key="createdAt" class="pa-2">
-        <v-col cols="2">
-          <!--<v-icon>{{ field.icon }}</v-icon>-->
-        </v-col>
-        <v-col cols="5">
-          <span class="caption">Created at</span>
-        </v-col>
-        <v-col cols="5">
-          <span class="body-1">{{ createdAt }}</span>
-        </v-col>
-      </v-row>
-    </v-card-text>
+    <v-row class="my-3" no-gutters align="center">
+      <v-col cols="2">
+        <v-card-title>
+          <v-avatar size="128">
+            <v-img cover :src="logo" alt="{{ teamName }} Logo" />
+          </v-avatar>
+        </v-card-title>
+      </v-col>
+      <v-col>
+        <v-card-text>
+          <p class="caption">Club: {{ teamName }}</p>
+          <p class="caption">Posición: {{ positionName }}</p>
+          <p class="caption">Rango requerido: {{ rank }}</p>
+        </v-card-text>
+      </v-col>
+      <v-col>
+        <v-card-text>
+          <p class="caption text-end">Publicada el: {{ formatDate(createdAt) }}</p>
+        </v-card-text>
+      </v-col>
+    </v-row>
 
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -78,5 +59,11 @@ export default {
       required: true,
     },
   },
+  methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString();
+    },
+  }
 };
 </script>
