@@ -13,7 +13,7 @@
     </template>
     <template v-else>
       <!-- Save Button -->
-      <v-row justify="end">
+      <v-row justify="end" class="mb-3">
         <v-col cols="12" md="2">
           <router-link to="/admin/offers/new"><v-btn block color="primary">Nueva oferta</v-btn></router-link>
         </v-col>
@@ -46,10 +46,17 @@
             <td>{{ offer.teamName }}</td>
             <td>{{ offer.positionName }}</td>
             <td>{{ offer.rank }}</td>
-            <td>{{ offer.active ? 'Yes' : 'No' }}</td>
             <td>
-              <router-link :to="{ name: 'OfferDetail', params: { id: offer.id }}">Ver</router-link> |
-              <router-link :to="{ name: 'AdminEditOffer', params: { id: offer.id }}">Editar</router-link>
+              <template v-if="offer.active">
+                <v-icon>mdi-check</v-icon>
+              </template>
+              <template v-else>
+                -
+              </template>
+            </td>
+            <td>
+              <router-link :to="{ name: 'OfferDetail', params: { id: offer.id }}"><v-icon>mdi-eye</v-icon></router-link>&nbsp;
+              <router-link :to="{ name: 'AdminEditOffer', params: { id: offer.id }}"><v-icon>mdi-pencil</v-icon></router-link>
             </td>
           </tr>
         </tbody>
