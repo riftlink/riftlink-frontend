@@ -1,12 +1,9 @@
 <template>
   <v-navigation-drawer v-model="drawer">
-    <v-toolbar flat>
-      <v-toolbar-title>Riftlink</v-toolbar-title>
-    </v-toolbar>
-
-    <v-divider></v-divider>
-
     <v-list>
+      <v-list-item>
+        <img src="/assets/img/logo.png" alt="Riftlink" />
+      </v-list-item>
       <v-list-item>
         <template v-slot:prepend>
           <v-icon>mdi-inbox-arrow-down</v-icon>
@@ -22,11 +19,7 @@
     </v-list>
 
     <template v-slot:append>
-      <v-divider></v-divider>
-      <v-sheet
-        color="grey-lighten-4"
-        class="pa-4"
-      >
+      <v-sheet class="pa-4">
         <template v-if="isAuthenticated">
           <v-avatar
             class="mb-4"
@@ -48,7 +41,7 @@
         </template>
         <template v-else>
           <div class="pa-2">
-            <v-btn @click="login" block>Login</v-btn>
+            <v-btn color="primary" @click="login" block>Login</v-btn>
           </div>
         </template>
       </v-sheet>
