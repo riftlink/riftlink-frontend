@@ -4,7 +4,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
 export const UsersApiClient = {
   async fetchCurrentUser(accessToken) {
-    const apiUrl = apiBaseUrl + "/User";
+    const apiUrl = apiBaseUrl + "/users/me";
     const response = await axios.get(apiUrl, {
       headers: {
         'Authorization': 'Bearer ' + accessToken
@@ -15,7 +15,7 @@ export const UsersApiClient = {
   },
 
   async saveCurrentUser(accessToken, user) {
-    const apiUrl = apiBaseUrl + "/User";
+    const apiUrl = apiBaseUrl + "/users/me";
     const body = {
       summonerName: user.summonerName,
       aboutMe: user.aboutMe

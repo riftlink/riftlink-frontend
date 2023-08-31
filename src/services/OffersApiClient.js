@@ -4,7 +4,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
 export const OffersApiClient = {
   async fetchActiveOffers() {
-    const apiUrl = apiBaseUrl + "/Offer"
+    const apiUrl = apiBaseUrl + "/offers"
     const response = await axios.get(apiUrl)
     const offers = response.data
     return offers
@@ -22,7 +22,7 @@ export const OffersApiClient = {
   },
 
   async fetchOffer(offerId) {
-    const apiUrl = apiBaseUrl + "/Offer";
+    const apiUrl = apiBaseUrl + "/offers";
     const response = await axios.get(apiUrl + '/' + offerId)
     const offer = response.data
     return offer
