@@ -17,8 +17,9 @@ workflows:
           requires:
             - build
           filters:
-            only:
-              - /^v.*/
+            tags:
+              only:
+                - /^v.*/
 
 jobs:
   build:
