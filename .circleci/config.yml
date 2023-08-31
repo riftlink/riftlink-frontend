@@ -9,7 +9,7 @@ workflows:
       - build-pre
       - deploy-pre:
           requires:
-            - build
+            - build-pre
           filters:
             branches:
               only: main
@@ -24,7 +24,7 @@ workflows:
               ignore: /.*/
       - deploy-pro:
           requires:
-            - build
+            - build-pro
           filters:
             tags:
               only:
