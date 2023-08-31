@@ -7,12 +7,18 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - deploy:
+      - deploy-pre:
           requires:
             - build
           filters:
             branches:
               only: main
+      - deploy-pro:
+          requires:
+            - build
+          filters:
+            only:
+              - /^v.*/
 
 jobs:
   build:
@@ -39,7 +45,8 @@ jobs:
           root: .
           paths:
             - dist
-  deploy:
+
+  deploy-pre:
     docker:
       - image: cimg/node:20.5.0
     steps:
@@ -55,6 +62,27 @@ jobs:
       - aws-s3/sync:
           from: dist
           to: 's3://riftlink-webapp-pre'
+          arguments: |
+            --cache-control "no-cache" \
+            --exclude "*" \
+            --include *.html
+
+  deploy-pro:
+    docker:
+      - image: cimg/node:20.5.0
+    steps:
+      - attach_workspace:
+          at: .
+      - aws-s3/sync:
+          from: dist
+          to: 's3://riftlink-webapp-pro'
+          arguments: |
+            --cache-control "max-age=86400" \
+            --delete \
+            --exclude *.html
+      - aws-s3/sync:
+          from: dist
+          to: 's3://riftlink-webapp-pro'
           arguments: |
             --cache-control "no-cache" \
             --exclude "*" \
