@@ -57,5 +57,5 @@ jobs:
           to: 's3://riftlink-webapp-pre'
           arguments: |
             --cache-control "no-cache" \
-            --include *.html \
-            --exclude *
+            --exclude "*" \
+            --include *.html
