@@ -51,3 +51,10 @@ jobs:
           arguments: |
             --cache-control "max-age=86400" \
             --delete
+            --exclude index.html
+      - aws-s3/sync:
+          from: dist/index.html
+          to: 's3://riftlink-webapp-pre'
+          arguments: |
+            --cache-control "no-cache" \
+            --delete
