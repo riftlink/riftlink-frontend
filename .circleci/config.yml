@@ -4,7 +4,7 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
 
 workflows:
-  build-deploy:
+  build-deploy-pre:
     jobs:
       - build
       - deploy-pre:
@@ -13,6 +13,13 @@ workflows:
           filters:
             branches:
               only: main
+  build-deploy-pro:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only:
+                - /^v.*/
       - deploy-pro:
           requires:
             - build
