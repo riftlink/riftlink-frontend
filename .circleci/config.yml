@@ -6,7 +6,7 @@ orbs:
 workflows:
   build-deploy-pre:
     jobs:
-      - build
+      - build-pre
       - deploy-pre:
           requires:
             - build
@@ -15,7 +15,7 @@ workflows:
               only: main
   build-deploy-pro:
     jobs:
-      - build:
+      - build-pro:
           filters:
             tags:
               only:
@@ -33,7 +33,7 @@ workflows:
               ignore: /.*/
 
 jobs:
-  build:
+  build-pre:
     docker:
       - image: cimg/node:20.5.0
     steps:
@@ -78,6 +78,31 @@ jobs:
             --cache-control "no-cache" \
             --exclude "*" \
             --include *.html
+
+  build-pro:
+    docker:
+      - image: cimg/node:20.5.0
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install --legacy-peer-deps
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Build the application
+          command: npm run build-pro
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
 
   deploy-pro:
     docker:
