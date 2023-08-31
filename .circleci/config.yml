@@ -20,6 +20,8 @@ workflows:
             tags:
               only:
                 - /^v.*/
+            branches:
+              ignore: /.*/
       - deploy-pro:
           requires:
             - build
@@ -27,6 +29,8 @@ workflows:
             tags:
               only:
                 - /^v.*/
+            branches:
+              ignore: /.*/
 
 jobs:
   build:
