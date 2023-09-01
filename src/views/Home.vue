@@ -74,8 +74,8 @@ export default {
   methods: {
     async fetchOffers() {
       try {
-        const offers = await offersApiClient.fetchActiveOffers()
-        this.offers = offers
+        const offersPaged = await offersApiClient.fetchActiveOffers()
+        this.offers = offersPaged.offers
         this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
