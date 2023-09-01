@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-row class="my-3" no-gutters align="center">
-      <v-col cols="2">
+      <v-col md="4" lg="3" xl="2">
         <v-card-title>
           <v-avatar size="128">
             <v-img cover :src="logo" alt="{{ teamName }} Logo" />

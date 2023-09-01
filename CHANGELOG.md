@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Offer date is now properly formated in offer feed.
+- Better responsiveness for team logo in offer card.
 
 ## [1.0.0] - 2023-08-31
 
