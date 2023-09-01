@@ -32,7 +32,7 @@ import offersApiClient from "@/services/OffersApiClient.js"
             :teamName="offer.teamName"
             :positionName="offer.positionName"
             :rank="offer.rank"
-            :createdAt="formatDate(offer.createdAt)"
+            :createdAt="offer.createdAt"
             >
           </Card>
         </v-col>

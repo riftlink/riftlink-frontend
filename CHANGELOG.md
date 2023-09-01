@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Offer date is now properly formated in offer feed.
+
 ## [1.0.0] - 2023-08-31
 
 ### Added
