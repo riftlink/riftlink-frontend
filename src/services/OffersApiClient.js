@@ -3,9 +3,13 @@ import axios from "axios"
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
 export const OffersApiClient = {
-  async fetchActiveOffers() {
+  async fetchActiveOffers(page, pageSize) {
     const apiUrl = apiBaseUrl + "/offers"
-    const response = await axios.get(apiUrl)
+    const response = await axios.get(apiUrl, {
+      params: {
+        page, pageSize
+      }
+    })
     const offers = response.data
     return offers
   },

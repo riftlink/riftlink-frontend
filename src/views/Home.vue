@@ -24,7 +24,7 @@ import offersApiClient from "@/services/OffersApiClient.js"
     </template>
     <template v-else>
       <!-- Offers -->
-      <v-row justify="center">
+      <v-row justify="center" class="mb-3">
         <v-col cols="12" md="8" v-for="offer in offers" :key="offer.id">
           <Card
             :id="offer.id"
@@ -37,6 +37,10 @@ import offersApiClient from "@/services/OffersApiClient.js"
           </Card>
         </v-col>
       </v-row>
+      <v-pagination
+        v-model="currentPage"
+        :length="totalPages"
+        @update:modelValue="onPageChanged"></v-pagination>
     </template>
   </v-container>
 
@@ -56,6 +60,7 @@ export default {
       offers: [],
       itemsPerPage: 10,
       currentPage: 1,
+      totalOffers: 0
     };
   },
   async created() {
@@ -63,19 +68,17 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.offers.length / this.itemsPerPage);
-    },
-    displayedCards() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.offers.slice(start, end);
-    },
+      return Math.ceil(this.totalOffers / this.itemsPerPage);
+    }
   },
   methods: {
     async fetchOffers() {
+      this.state = 'loading'
       try {
-        const offers = await offersApiClient.fetchActiveOffers()
-        this.offers = offers
+        const pagedOffers = await offersApiClient.fetchActiveOffers(this.currentPage, this.itemsPerPage)
+        this.offers = pagedOffers.offers
+        this.totalOffers = pagedOffers.total
+        this.currentPage = pagedOffers.page
         this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
@@ -83,20 +86,14 @@ export default {
         this.state = 'error'
       }
     },
+    onPageChanged(newPage) {
+      this.currentPage = newPage
+      this.fetchOffers()
+    },
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleDateString();
-    },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    previousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
+    }
   },
 };
 </script>
