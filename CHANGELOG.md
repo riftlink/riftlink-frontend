@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Pagination to offer feed in home page.
+
 ### Fixed
 
 - Offer date is now properly formated in offer feed.
