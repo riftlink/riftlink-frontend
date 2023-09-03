@@ -60,7 +60,7 @@
                   Qué pedimos
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                  <p class="pa-2">{{ offer.requirements }}</p>
+                  <p class="pa-2" v-html="markdown.render(offer.requirements)"></p>
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -74,7 +74,7 @@
                   Qué ofrecemos
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                  <p class="pa-2">{{ offer.aboutUs }}</p>
+                  <p class="pa-2" v-html="markdown.render(offer.aboutUs)"></p>
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -111,6 +111,8 @@ import offersApiClient from "@/services/OffersApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
+import MarkdownIt from "markdown-it";
+
 export default {
   components: {
     Alert,
@@ -135,8 +137,9 @@ export default {
     await this.fetchOffer();
   },
   setup() {
+    const markdown = new MarkdownIt()
     const { isAuthenticated, loginWithRedirect } = useAuth0();
-    return { isAuthenticated, loginWithRedirect }
+    return { markdown, isAuthenticated, loginWithRedirect }
   },
   methods: {
     async fetchOffer() {

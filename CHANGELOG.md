@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Pagination to offer feed in home page.
+- Offer requirements and about us can now contain markdown.
 
 ### Fixed
 
