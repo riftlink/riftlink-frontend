@@ -74,6 +74,13 @@
               outlined
             ></v-textarea>
 
+            <!-- Apply Contact Field -->
+            <v-text-field
+              v-model="offer.applyContact"
+              label="Usuario de Discord de contacto"
+              outlined
+            ></v-text-field>
+
             <!-- Apply Url Field -->
             <v-text-field
               v-model="offer.applyUrl"
@@ -124,6 +131,7 @@ export default {
         applyUrl: '',
         requirements: '',
         aboutUs: '',
+        applyContact: '',
         active: false,
       },
     };

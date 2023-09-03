@@ -42,6 +42,7 @@ export const OffersApiClient = {
       applyUrl: offer.applyUrl,
       requirements: offer.requirements || '',
       aboutUs: offer.aboutUs || '',
+      applyContact: offer.applyContact || '',
       active: offer.active
     }
     await axios.post(apiUrl, body, {
@@ -61,6 +62,7 @@ export const OffersApiClient = {
       applyUrl: offer.applyUrl,
       requirements: offer.requirements || '',
       aboutUs: offer.aboutUs || '',
+      applyContact: offer.applyContact || '',
       active: offer.active
     }
     await axios.post(apiUrl + '/' + offerId, body, {

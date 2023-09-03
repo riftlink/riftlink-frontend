@@ -87,15 +87,29 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="lightboxOpen" max-width="500px">
+    <v-dialog v-model="loginLightboxOpen" max-width="500px">
       <v-card>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="closeLightbox"><v-icon>mdi-close</v-icon></v-btn>
+          <v-btn @click="closeLoginLightbox"><v-icon>mdi-close</v-icon></v-btn>
         </v-card-actions>
         <v-card-text class="text-center">
           <div class="headline mb-3">¡Crea tu perfil en un momento y aplica a esta oferta y muchas más!</div>
           <v-btn class="mt-3 mb-12" @click="login" color="primary">Vamos a ello</v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="applyLightboxOpen" max-width="500px">
+      <v-card>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="closeApplyLightbox"><v-icon>mdi-close</v-icon></v-btn>
+        </v-card-actions>
+        <v-card-text class="text-center">
+          <div class="headline mb-3">Para aplicar a esta oferta, envía un MD al siguiente usuario a través de Discord:</div>
+          <div class="headline mb-3"><em>{{ offer.applyContact }}</em></div>
+          <div class="headline mb-3">Avisa que vas de parte de Riftlink y... ¡Mucha suerte!</div>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -120,7 +134,8 @@ export default {
   data() {
     return {
       state: 'loading',
-      lightboxOpen: false,
+      loginLightboxOpen: false,
+      applyLightboxOpen: false,
       offer: {
         teamName: '',
         positionName: '',
@@ -128,6 +143,7 @@ export default {
         logoUrl: '',
         applyUrl: '',
         requirements: '',
+        applyContact: '',
         aboutUs: '',
       },
       isAuthenticated: null,
@@ -159,13 +175,18 @@ export default {
     },
     onApplyClick() {
       if (!this.isAuthenticated) {
-        this.lightboxOpen = true;
+        this.loginLightboxOpen = true
+      } else if (this.offer.applyUrl) {
+        window.open(this.offer.applyUrl, '_blank')
       } else {
-        window.open(this.offer.applyUrl, '_blank');
+        this.applyLightboxOpen = true
       }
     },
-    closeLightbox() {
-      this.lightboxOpen = false;
+    closeLoginLightbox() {
+      this.loginLightboxOpen = false;
+    },
+    closeApplyLightbox() {
+      this.applyLightboxOpen = false;
     },
     formatDate(dateString) {
       const date = new Date(dateString);
