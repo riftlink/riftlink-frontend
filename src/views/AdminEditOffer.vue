@@ -114,6 +114,45 @@
             </v-col>
           </v-card>
 
+          <!-- Social links -->
+          <v-card class="mt-3">
+            <v-card-title>
+              <div>
+                <span class="headline">Social links</span>
+              </div>
+            </v-card-title>
+
+            <v-col cols="12">
+              <!-- Apply Contact Field -->
+              <v-text-field
+                v-model="offer.websiteLink"
+                label="Sitio web"
+                outlined
+              ></v-text-field>
+
+              <!-- Apply Contact Field -->
+              <v-text-field
+                v-model="offer.linktreeHandle"
+                label="Linktree handle"
+                outlined
+              ></v-text-field>
+
+              <!-- Apply Contact Field -->
+              <v-text-field
+                v-model="offer.discordInvite"
+                label="Discord invite"
+                outlined
+              ></v-text-field>
+
+              <!-- Apply Contact Field -->
+              <v-text-field
+                v-model="offer.twitterHandle"
+                label="Twitter handle"
+                outlined
+              ></v-text-field>
+            </v-col>
+          </v-card>
+
           <!-- Danger zone -->
           <v-card class="mt-3">
             <v-card-title>

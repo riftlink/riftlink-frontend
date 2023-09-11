@@ -52,8 +52,51 @@
             </v-row>
           </v-card>
 
-          <!-- Requirements -->
+          <!-- Social networks -->
           <v-card class="mb-3">
+            <v-expansion-panels v-model="panels">
+              <v-expansion-panel elevation="0">
+                <v-expansion-panel-title>
+                  Redes sociales
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
+                  <p class="mt-3">
+                    <a :href="twitterUrl" target="_blank" v-if="offer.twitterHandle">
+                      <v-img
+                        inline
+                        :width="32"
+                        src="~/../assets/img/social/ic-twitter.png"
+                      ></v-img>
+                    </a>
+                    <a :href="offer.discordInvite" target="_blank" v-if="offer.discordInvite">
+                      <v-img
+                        inline
+                        :width="32"
+                        src="~/../assets/img/social/ic-discord.png"
+                      ></v-img>
+                    </a>
+                    <a :href="offer.websiteLink" target="_blank" v-if="offer.websiteLink">
+                      <v-img
+                        inline
+                        :width="32"
+                        src="~/../assets/img/social/ic-discord.png"
+                      ></v-img>
+                    </a>
+                    <a :href="linktreeUrl" target="_blank" v-if="offer.linktreeHandle">
+                      <v-img
+                        inline
+                        :width="32"
+                        src="~/../assets/img/social/ic-discord.png"
+                      ></v-img>
+                    </a>
+                  </p>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-card>
+
+          <!-- Requirements -->
+          <v-card class="mb-3" v-if="offer.requirements">
             <v-expansion-panels>
               <v-expansion-panel elevation="0">
                 <v-expansion-panel-title>
@@ -67,7 +110,7 @@
           </v-card>
 
           <!-- About us -->
-          <v-card class="mb-3">
+          <v-card class="mb-3" v-if="offer.aboutUs">
             <v-expansion-panels>
               <v-expansion-panel elevation="0">
                 <v-expansion-panel-title>
@@ -134,6 +177,7 @@ export default {
   data() {
     return {
       state: 'loading',
+      panels: [0],
       loginLightboxOpen: false,
       applyLightboxOpen: false,
       offer: {
@@ -156,6 +200,14 @@ export default {
     const markdown = new MarkdownIt()
     const { isAuthenticated, loginWithRedirect } = useAuth0();
     return { markdown, isAuthenticated, loginWithRedirect }
+  },
+  computed: {
+    twitterUrl() {
+      return 'https://www.twitter.com/' + this.offer.twitterHandle
+    },
+    linktreeUrl() {
+      return 'https://www.linktr.ee/' + this.offer.linktreeHandle
+    }
   },
   methods: {
     async fetchOffer() {
