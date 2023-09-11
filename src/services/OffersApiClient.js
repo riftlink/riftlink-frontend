@@ -71,6 +71,15 @@ export const OffersApiClient = {
       }
     })
   },
+
+  async deleteOffer(accessToken, offerId) {
+    const resourceUrl = apiBaseUrl + "/admin/offers/" + offerId;
+    await axios.delete(resourceUrl, {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    })
+  },
 }
 
 export default OffersApiClient

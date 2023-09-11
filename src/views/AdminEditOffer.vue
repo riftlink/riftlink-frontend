@@ -22,9 +22,17 @@
 
           <v-card>
             <v-card-title>
-              <div>
-                <span class="headline">Editar oferta</span>
-              </div>
+              <v-row justify="center">
+                <v-col cols="12" md="10">
+                  <!-- Header -->
+                  <div>
+                    <span class="headline">Editar oferta</span>
+                  </div>
+                </v-col>
+                <v-col cols="12" md="2">
+                  <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
+                </v-col>
+              </v-row>
             </v-card-title>
 
             <v-col cols="12" sm="12" md="12">
@@ -106,12 +114,37 @@
             </v-col>
           </v-card>
 
-          <!-- Save Button -->
-          <v-row justify="center">
-            <v-col cols="12" sm="8" md="6">
-              <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
+          <!-- Danger zone -->
+          <v-card class="mt-3">
+            <v-card-title>
+              <div>
+                <span class="headline">Zona de peligro</span>
+              </div>
+            </v-card-title>
+
+            <v-col cols="12">
+              <v-btn color="primary" @click="openDeleteLightbox">Eliminar</v-btn>
             </v-col>
-          </v-row>
+          </v-card>
+
+          <!-- Delete lightbox -->
+          <v-dialog v-model="deleteLightboxOpen" max-width="500px">
+            <v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click="closeDeleteLightbox"><v-icon>mdi-close</v-icon></v-btn>
+              </v-card-actions>
+              <v-card-text class="text-center">
+                <div class="headline mb-3">ATENCIÓN: esta operación es irreversible. ¿estás seguro de que deseas borrar la oferta?</div>
+                <v-text-field
+                  v-model="deleteConfirmation"
+                  label="Escribe la palabra 'eliminar' para confirmar el borrado"
+                  outlined
+                ></v-text-field>
+                <v-btn class="mt-3 mb-12" @click="deleteOffer" color="primary">Eliminar</v-btn>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
         </template>
       </v-col>
     </v-row>
@@ -134,6 +167,8 @@ export default {
     return {
       state: 'loading',
       offer: null,
+      deleteLightboxOpen: false,
+      deleteConfirmation: ''
     };
   },
   setup() {
@@ -170,6 +205,26 @@ export default {
         console.error("Couldn't save offer:", error);
       }
     },
+    async deleteOffer() {
+      if (this.deleteConfirmation !== 'eliminar') {
+        return
+      }
+      const offerId = this.$route.params.id
+      const accessToken = await this.getAccessTokenSilently()
+      try {
+        await offersApiClient.deleteOffer(accessToken, offerId)
+        this.$router.push('/admin/offers');
+      } catch (error) {
+        this.$refs.alert.alertError("¡Ups! Hubo un error al eliminar la oferta.")
+        console.error("Couldn't delete offer:", error);
+      }
+    },
+    openDeleteLightbox() {
+      this.deleteLightboxOpen = true
+    },
+    closeDeleteLightbox() {
+      this.deleteLightboxOpen = false
+    }
   },
 };
 </script>
