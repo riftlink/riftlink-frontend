@@ -5,11 +5,11 @@
         <!-- Back Button -->
         <v-row>
           <v-col cols="12" sm="8" md="6">
-            <router-link to="/admin/offers">Atrás</router-link>
+            <router-link to="/admin/offers"><i class="mdi mdi-arrow-left"></i> Atrás</router-link>
           </v-col>
         </v-row>
 
-        <v-card>
+        <v-card class="mt-3">
           <v-card-title>
             <div>
               <span class="headline">Crear nueva oferta</span>
@@ -94,6 +94,44 @@
                 label="Activa"></v-checkbox>
           </v-col>
         </v-card>
+
+        <v-card class="mt-3">
+          <v-card-title>
+            <div>
+              <span class="headline">Social links</span>
+            </div>
+          </v-card-title>
+
+          <v-col cols="12" sm="12" md="12">
+            <!-- Apply Contact Field -->
+            <v-text-field
+              v-model="offer.websiteLink"
+              label="Sitio web"
+              outlined
+            ></v-text-field>
+
+            <!-- Apply Contact Field -->
+            <v-text-field
+              v-model="offer.linktreeHandle"
+              label="Linktree handle"
+              outlined
+            ></v-text-field>
+
+            <!-- Apply Contact Field -->
+            <v-text-field
+              v-model="offer.discordInvite"
+              label="Discord invite"
+              outlined
+            ></v-text-field>
+
+            <!-- Apply Contact Field -->
+            <v-text-field
+              v-model="offer.twitterHandle"
+              label="Twitter handle"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-card>
       </v-col>
     </v-row>
 
@@ -132,6 +170,10 @@ export default {
         requirements: '',
         aboutUs: '',
         applyContact: '',
+        websiteLink: '',
+        linktreeHandle: '',
+        discordInvite: '',
+        twitterHandle: '',
         active: false,
       },
     };

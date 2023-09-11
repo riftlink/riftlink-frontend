@@ -43,6 +43,10 @@ export const OffersApiClient = {
       requirements: offer.requirements || '',
       aboutUs: offer.aboutUs || '',
       applyContact: offer.applyContact || '',
+      websiteLink: offer.websiteLink || '',
+      linktreeHandle: offer.linktreeHandle || '',
+      discordInvite: offer.discordInvite || '',
+      twitterHandle: offer.twitterHandle || '',
       active: offer.active
     }
     await axios.post(apiUrl, body, {
@@ -63,6 +67,10 @@ export const OffersApiClient = {
       requirements: offer.requirements || '',
       aboutUs: offer.aboutUs || '',
       applyContact: offer.applyContact || '',
+      websiteLink: offer.websiteLink || '',
+      linktreeHandle: offer.linktreeHandle || '',
+      discordInvite: offer.discordInvite || '',
+      twitterHandle: offer.twitterHandle || '',
       active: offer.active
     }
     await axios.post(apiUrl + '/' + offerId, body, {
