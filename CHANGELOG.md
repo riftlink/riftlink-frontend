@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Social links in offer details.
 - Admin: can now delete offers.
 
 ## [1.1.0] - 2023-09-03
