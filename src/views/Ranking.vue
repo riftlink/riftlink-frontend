@@ -42,7 +42,7 @@
           >
             <td>{{ summoner.index }}</td>
             <td>{{ summoner.name }}</td>
-            <td>{{ summoner.tier }} {{ summoner.rank }}</td>
+            <td>{{ formatRank(summoner) }}</td>
             <td>{{ summoner.leaguePoints }}</td>
             <td>{{ summoner.wins }}</td>
             <td>{{ summoner.losses }}</td>
@@ -95,6 +95,13 @@ export default {
         this.state = 'error';
       }
     },
+    formatRank(summoner) {
+      const formattedRank = summoner.tier.charAt(0).toUpperCase() + summoner.tier.slice(1).toLowerCase()
+      if (summoner.tier === "UNRANKED" || summoner.tier === "MASTER" || summoner.tier === "GRANDMASTER" || summoner.tier === "CHALLENGER") {
+        return formattedRank
+      }
+      return formattedRank + " " + summoner.rank
+    }
   },
 };
 </script>
