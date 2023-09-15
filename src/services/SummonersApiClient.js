@@ -10,8 +10,8 @@ export const SummonersApiClient = {
         'Authorization': 'Bearer ' + accessToken
       }
     })
-    const offers = response.data
-    return offers
+    const summoners = response.data
+    return summoners
   },
 }
 

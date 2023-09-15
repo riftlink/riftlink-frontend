@@ -38,6 +38,17 @@ const routes = [
     beforeEnter: authGuard,
   },
   {
+    path: '/ranking',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Ranking',
+        component: () => import('@/views/Ranking.vue'),
+      },
+    ]
+  },
+  {
     path: '/admin/offers',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
