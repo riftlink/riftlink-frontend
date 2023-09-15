@@ -26,6 +26,26 @@ export const UsersApiClient = {
       }
     })
   },
+
+  async listAllUsers(accessToken) {
+    const apiUrl = apiBaseUrl + "/admin/users";
+    const response = await axios.get(apiUrl, {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    })
+    const offers = response.data
+    return offers
+  },
+
+  async refreshSummoner(accessToken, userId) {
+    const apiUrl = apiBaseUrl + "/admin/users/" + userId + "/refreshSummoner";
+    await axios.post(apiUrl, {}, {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    })
+  },
 }
 
 export default UsersApiClient

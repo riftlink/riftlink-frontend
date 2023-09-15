@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Player ranking
 - Social links in offer details.
 - Admin: can now delete offers.
+- Admin: synchronize summoner profile with riot api
+- Admin: list of users
+- Admin: list of summoners
 
 ## [1.1.0] - 2023-09-03
 

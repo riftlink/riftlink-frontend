@@ -38,6 +38,17 @@ const routes = [
     beforeEnter: authGuard,
   },
   {
+    path: '/ranking',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Ranking',
+        component: () => import('@/views/Ranking.vue'),
+      },
+    ]
+  },
+  {
     path: '/admin/offers',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
@@ -69,6 +80,30 @@ const routes = [
         path: '',
         name: 'AdminCreateOffer',
         component: () => import('@/views/AdminCreateOffer.vue'),
+      },
+    ],
+    beforeEnter: authGuard,
+  },
+  {
+    path: '/admin/users',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AdminUsers',
+        component: () => import('@/views/AdminUsers.vue'),
+      },
+    ],
+    beforeEnter: authGuard,
+  },
+  {
+    path: '/admin/summoners',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AdminSummoners',
+        component: () => import('@/views/AdminSummoners.vue'),
       },
     ],
     beforeEnter: authGuard,
