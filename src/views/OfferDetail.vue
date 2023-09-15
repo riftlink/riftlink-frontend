@@ -53,7 +53,7 @@
           </v-card>
 
           <!-- Social networks -->
-          <v-card class="mb-3">
+          <v-card class="mb-3" v-if="shouldShowSocialLinks">
             <v-expansion-panels v-model="panels">
               <v-expansion-panel elevation="0">
                 <v-expansion-panel-title>
@@ -61,32 +61,32 @@
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
                   <p class="mt-3">
-                    <a :href="twitterUrl" target="_blank" v-if="offer.twitterHandle">
+                    <a class="mr-2" :href="twitterUrl" target="_blank" v-if="offer.twitterHandle">
                       <v-img
                         inline
                         :width="32"
                         src="~/../assets/img/social/ic-twitter.png"
                       ></v-img>
                     </a>
-                    <a :href="offer.discordInvite" target="_blank" v-if="offer.discordInvite">
+                    <a class="mr-2" :href="offer.discordInvite" target="_blank" v-if="offer.discordInvite">
                       <v-img
                         inline
                         :width="32"
                         src="~/../assets/img/social/ic-discord.png"
                       ></v-img>
                     </a>
-                    <a :href="offer.websiteLink" target="_blank" v-if="offer.websiteLink">
+                    <a class="mr-2" :href="offer.websiteLink" target="_blank" v-if="offer.websiteLink">
                       <v-img
                         inline
                         :width="32"
-                        src="~/../assets/img/social/ic-discord.png"
+                        src="~/../assets/img/social/ic-web.png"
                       ></v-img>
                     </a>
-                    <a :href="linktreeUrl" target="_blank" v-if="offer.linktreeHandle">
+                    <a class="mr-2" :href="linktreeUrl" target="_blank" v-if="offer.linktreeHandle">
                       <v-img
                         inline
                         :width="32"
-                        src="~/../assets/img/social/ic-discord.png"
+                        src="~/../assets/img/social/ic-linktree.png"
                       ></v-img>
                     </a>
                   </p>
@@ -207,6 +207,12 @@ export default {
     },
     linktreeUrl() {
       return 'https://www.linktr.ee/' + this.offer.linktreeHandle
+    },
+    shouldShowSocialLinks() {
+      return this.offer.twitterHandle
+          || this.offer.linktreeHandle
+          || this.offer.discordInvite
+          || this.offer.websiteLink
     }
   },
   methods: {
