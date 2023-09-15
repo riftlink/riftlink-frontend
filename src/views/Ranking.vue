@@ -28,10 +28,10 @@
               LP
             </th>
             <th class="text-left">
-              Wins
+              Total games
             </th>
             <th class="text-left">
-              Losses
+              Win rate
             </th>
           </tr>
         </thead>
@@ -44,8 +44,8 @@
             <td>{{ summoner.name }}</td>
             <td>{{ formatRank(summoner) }}</td>
             <td>{{ summoner.leaguePoints }}</td>
-            <td>{{ summoner.wins }}</td>
-            <td>{{ summoner.losses }}</td>
+            <td>{{ summoner.totalGames }}</td>
+            <td>{{ formatPercent(summoner.winRate) }}</td>
           </tr>
         </tbody>
       </v-table>
@@ -101,6 +101,9 @@ export default {
         return formattedRank
       }
       return formattedRank + " " + summoner.rank
+    },
+    formatPercent(number) {
+      return (number * 100).toFixed(1) + " %"
     }
   },
 };
