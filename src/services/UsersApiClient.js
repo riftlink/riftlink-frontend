@@ -37,6 +37,15 @@ export const UsersApiClient = {
     const offers = response.data
     return offers
   },
+
+  async refreshSummoner(accessToken, userId) {
+    const apiUrl = apiBaseUrl + "/admin/users/" + userId + "/refreshSummoner";
+    await axios.post(apiUrl, {}, {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    })
+  },
 }
 
 export default UsersApiClient

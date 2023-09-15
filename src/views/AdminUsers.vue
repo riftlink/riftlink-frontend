@@ -22,6 +22,9 @@
             <th class="text-left">
               SummonerName
             </th>
+            <th class="text-left">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +34,9 @@
           >
             <td>{{ user.id }}</td>
             <td>{{ user.summonerName }}</td>
+            <td>
+              <a href="#" @click="refreshSummoner(user.id)"><v-icon>mdi-refresh</v-icon></a>
+            </td>
           </tr>
         </tbody>
       </v-table>
@@ -43,7 +49,7 @@
 <script>
 import Alert from '@/components/Alert.vue';
 
-import usersApiClient from "@/services/usersApiClient.js"
+import usersApiClient from "@/services/UsersApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
@@ -78,6 +84,16 @@ export default {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar los usuarios.")
         console.error("Couldn't get users:", error);
         this.state = 'error';
+      }
+    },
+    async refreshSummoner(userId) {
+      const accessToken = await this.getAccessTokenSilently()
+      try {
+        await usersApiClient.refreshSummoner(accessToken, userId)
+        this.$refs.alert.alertSuccess("El summoner del usuario se refrescó correctamente.")
+      } catch (error) {
+        this.$refs.alert.alertError("¡Ups! Hubo un error al refrescar el summoner del usuario.")
+        console.error("Couldn't refresh summoner:", error);
       }
     },
   },

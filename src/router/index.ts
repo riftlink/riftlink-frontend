@@ -85,6 +85,18 @@ const routes = [
     ],
     beforeEnter: authGuard,
   },
+  {
+    path: '/admin/summoners',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AdminSummoners',
+        component: () => import('@/views/AdminSummoners.vue'),
+      },
+    ],
+    beforeEnter: authGuard,
+  },
 ]
 
 const router = createRouter({
