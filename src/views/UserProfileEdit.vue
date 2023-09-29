@@ -49,7 +49,8 @@
           <!-- Summoner role Field -->
           <v-row justify="center">
             <v-col>
-              <v-text-field v-model="role" label="Rol" outlined></v-text-field>
+              <v-select v-model="role" label="Rol" :items="availableRoles" outlined>
+              </v-select>
             </v-col>
           </v-row>
 
@@ -98,7 +99,8 @@ export default {
         visible: false,
         text: '',
         color: ''
-      }
+      },
+      availableRoles: ['Top', 'Jungle', 'Mid', 'Adc', 'Support']
     };
   },
   setup() {
