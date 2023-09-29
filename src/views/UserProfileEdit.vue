@@ -46,6 +46,13 @@
             </v-col>
           </v-row>
 
+          <!-- Summoner role Field -->
+          <v-row justify="center">
+            <v-col>
+              <v-text-field v-model="role" label="Rol" outlined></v-text-field>
+            </v-col>
+          </v-row>
+
           <!-- About me Field -->
           <v-row justify="center">
             <v-col>
@@ -85,6 +92,7 @@ export default {
       username: "",
       avatarUrl: "",
       summonerName: "",
+      role: "",
       aboutMe: "",
       alert: {
         visible: false,
@@ -112,6 +120,7 @@ export default {
       try {
         const userData = await usersApiClient.fetchCurrentUser(accessToken)
         this.summonerName = userData.summonerName;
+        this.role = userData.role;
         this.aboutMe = userData.aboutMe;
         this.state = 'ok'
       } catch (err) {
@@ -125,6 +134,7 @@ export default {
       try {
         const user = {
           summonerName: this.summonerName,
+          role: this.role,
           aboutMe: this.aboutMe
         }
         await usersApiClient.saveCurrentUser(accessToken, user)

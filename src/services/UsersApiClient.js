@@ -18,6 +18,7 @@ export const UsersApiClient = {
     const apiUrl = apiBaseUrl + "/users/me";
     const body = {
       summonerName: user.summonerName,
+      role: user.role,
       aboutMe: user.aboutMe
     }
     await axios.post(apiUrl, body, {
