@@ -101,11 +101,11 @@ export default {
         color: ''
       },
       availableRoles: [
-        {text: 'Top', value: 'top'},
-        {text: 'Jungle', value: 'jungle'},
-        {text: 'Mid', value: 'mid'},
-        {text: 'Adc', value: 'adc'},
-        {text: 'Support', value: 'support'}
+        {text: 'Top', value: 'Top'},
+        {text: 'Jungla', value: 'Jungle'},
+        {text: 'Mid', value: 'Mid'},
+        {text: 'Adc', value: 'Adc'},
+        {text: 'Soporte', value: 'Support'}
       ]
     };
   },
