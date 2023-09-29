@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Role in player profile
 - Player ranking
 - Social links in offer details.
 - Admin: can now delete offers.

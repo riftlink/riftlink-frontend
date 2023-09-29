@@ -46,6 +46,14 @@
             </v-col>
           </v-row>
 
+          <!-- Summoner role Field -->
+          <v-row justify="center">
+            <v-col>
+              <v-select v-model="role" label="Rol" :items="availableRoles" item-value="value" item-title="text" outlined>
+              </v-select>
+            </v-col>
+          </v-row>
+
           <!-- About me Field -->
           <v-row justify="center">
             <v-col>
@@ -85,12 +93,20 @@ export default {
       username: "",
       avatarUrl: "",
       summonerName: "",
+      role: "",
       aboutMe: "",
       alert: {
         visible: false,
         text: '',
         color: ''
-      }
+      },
+      availableRoles: [
+        {text: 'Top', value: 'Top'},
+        {text: 'Jungla', value: 'Jungle'},
+        {text: 'Mid', value: 'Mid'},
+        {text: 'Adc', value: 'Adc'},
+        {text: 'Soporte', value: 'Support'}
+      ]
     };
   },
   setup() {
@@ -112,6 +128,7 @@ export default {
       try {
         const userData = await usersApiClient.fetchCurrentUser(accessToken)
         this.summonerName = userData.summonerName;
+        this.role = userData.role;
         this.aboutMe = userData.aboutMe;
         this.state = 'ok'
       } catch (err) {
@@ -125,6 +142,7 @@ export default {
       try {
         const user = {
           summonerName: this.summonerName,
+          role: this.role,
           aboutMe: this.aboutMe
         }
         await usersApiClient.saveCurrentUser(accessToken, user)
