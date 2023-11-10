@@ -8,14 +8,14 @@ import offersApiClient from "@/services/OffersApiClient.js"
     <!-- Header -->
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <h2>Ofertas</h2>
+        <h2>Clubes</h2>
       </v-col>
     </v-row>
 
     <template v-if="state == 'error'">
       <v-row>
         <v-col cols="12">
-          <p class="text-center">¡Ups! Hubo un error al recuperar las ofertas. Refresca la página para intentarlo de nuevo.</p>
+          <p class="text-center">¡Ups! Hubo un error al recuperar los clubes. Refresca la página para intentarlo de nuevo.</p>
         </v-col>
       </v-row>
     </template>
@@ -30,9 +30,6 @@ import offersApiClient from "@/services/OffersApiClient.js"
             :id="offer.id"
             :logo="offer.logoUrl"
             :teamName="offer.teamName"
-            :positionName="offer.positionName"
-            :rank="offer.rank"
-            :createdAt="offer.createdAt"
             >
           </Card>
         </v-col>
@@ -81,7 +78,7 @@ export default {
         this.currentPage = pagedOffers.page
         this.state = 'ok';
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
+        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar los clubes.")
         console.error("Couldn't get offers:", error);
         this.state = 'error'
       }
@@ -89,10 +86,6 @@ export default {
     onPageChanged(newPage) {
       this.currentPage = newPage
       this.fetchOffers()
-    },
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString();
     }
   },
 };

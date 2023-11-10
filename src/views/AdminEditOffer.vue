@@ -5,7 +5,7 @@
         <template v-if="state == 'error'">
           <v-row>
             <v-col cols="12">
-              <p class="text-center">¡Ups! Hubo un error al recuperar la oferta. Refresca la página para intentarlo de nuevo.</p>
+              <p class="text-center">¡Ups! Hubo un error al recuperar el club. Refresca la página para intentarlo de nuevo.</p>
             </v-col>
           </v-row>
         </template>
@@ -26,7 +26,7 @@
                 <v-col cols="12" md="10">
                   <!-- Header -->
                   <div>
-                    <span class="headline">Editar oferta</span>
+                    <span class="headline">Editar club</span>
                   </div>
                 </v-col>
                 <v-col cols="12" md="2">
@@ -36,17 +36,10 @@
             </v-card-title>
 
             <v-col cols="12" sm="12" md="12">
-              <!-- Position Name Field -->
-              <v-text-field
-                v-model="offer.positionName"
-                label="Posición"
-                outlined
-              ></v-text-field>
-
               <!-- Team Name Field -->
               <v-text-field
                 v-model="offer.teamName"
-                label="Nombre del equipo"
+                label="Nombre del club"
                 outlined
               ></v-text-field>
 
@@ -72,20 +65,6 @@
                 </v-col>
               </v-row>
 
-              <!-- Rank Field -->
-              <v-text-field
-                v-model="offer.rank"
-                label="Rango requerido"
-                outlined
-              ></v-text-field>
-
-              <!-- Requirements Field -->
-              <v-textarea
-                v-model="offer.requirements"
-                label="Qué pedimos"
-                outlined
-              ></v-textarea>
-
               <!-- About Us Field -->
               <v-textarea
                 v-model="offer.aboutUs"
@@ -97,13 +76,6 @@
               <v-text-field
                 v-model="offer.applyContact"
                 label="Usuario de Discord de contacto"
-                outlined
-              ></v-text-field>
-
-              <!-- Apply Url Field -->
-              <v-text-field
-                v-model="offer.applyUrl"
-                label="Link para aplicar"
                 outlined
               ></v-text-field>
 
@@ -174,7 +146,7 @@
                 <v-btn @click="closeDeleteLightbox"><v-icon>mdi-close</v-icon></v-btn>
               </v-card-actions>
               <v-card-text class="text-center">
-                <div class="headline mb-3">ATENCIÓN: esta operación es irreversible. ¿estás seguro de que deseas borrar la oferta?</div>
+                <div class="headline mb-3">ATENCIÓN: esta operación es irreversible. ¿estás seguro de que deseas borrar el club?</div>
                 <v-text-field
                   v-model="deleteConfirmation"
                   label="Escribe la palabra 'eliminar' para confirmar el borrado"
@@ -228,7 +200,7 @@ export default {
         this.offer = offer;
         this.state = 'ok'
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar la oferta.")
+        this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar el club.")
         console.error("Couldn't get offer:", error);
         this.state = 'error'
       }
@@ -240,7 +212,7 @@ export default {
         await offersApiClient.saveOffer(accessToken, offerId, this.offer)
         this.$refs.alert.alertSuccess("¡Guardado con éxito!")
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar la oferta.")
+        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar el club.")
         console.error("Couldn't save offer:", error);
       }
     },
@@ -254,7 +226,7 @@ export default {
         await offersApiClient.deleteOffer(accessToken, offerId)
         this.$router.push('/admin/offers');
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un error al eliminar la oferta.")
+        this.$refs.alert.alertError("¡Ups! Hubo un error al eliminar el club.")
         console.error("Couldn't delete offer:", error);
       }
     },

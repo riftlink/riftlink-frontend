@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <h1>Ofertas</h1>
+    <h1>Clubes</h1>
     <template v-if="state == 'error'">
       <v-row>
         <v-col cols="12">
-          <p class="text-center">¡Ups! Hubo un error al recuperar las ofertas. Refresca la página para intentarlo de nuevo.</p>
+          <p class="text-center">¡Ups! Hubo un error al recuperar los clubes. Refresca la página para intentarlo de nuevo.</p>
         </v-col>
       </v-row>
     </template>
@@ -15,7 +15,7 @@
       <!-- Save Button -->
       <v-row justify="end" class="mb-3">
         <v-col cols="12" md="2">
-          <router-link to="/admin/offers/new"><v-btn block color="primary">Nueva oferta</v-btn></router-link>
+          <router-link to="/admin/offers/new"><v-btn block color="primary">Nuevo club</v-btn></router-link>
         </v-col>
       </v-row>
       <v-table>
@@ -23,12 +23,6 @@
           <tr>
             <th class="text-left">
               Team
-            </th>
-            <th class="text-left">
-              Position
-            </th>
-            <th class="text-left">
-              Rank
             </th>
             <th class="text-left">
               Active
@@ -44,8 +38,6 @@
             :key="offer.id"
           >
             <td>{{ offer.teamName }}</td>
-            <td>{{ offer.positionName }}</td>
-            <td>{{ offer.rank }}</td>
             <td>
               <template v-if="offer.active">
                 <v-icon>mdi-check</v-icon>
@@ -102,7 +94,7 @@ export default {
         this.offers = offers;
         this.state = 'ok';
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar las ofertas.")
+        this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar los clubes.")
         console.error("Couldn't get offers:", error);
         this.state = 'error';
       }

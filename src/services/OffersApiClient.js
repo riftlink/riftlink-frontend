@@ -36,11 +36,7 @@ export const OffersApiClient = {
     const apiUrl = apiBaseUrl + "/admin/offers"
     const body = {
       teamName: offer.teamName,
-      positionName: offer.positionName,
-      rank: offer.rank,
       logoUrl: offer.logoUrl,
-      applyUrl: offer.applyUrl,
-      requirements: offer.requirements || '',
       aboutUs: offer.aboutUs || '',
       applyContact: offer.applyContact || '',
       websiteLink: offer.websiteLink || '',
@@ -60,11 +56,7 @@ export const OffersApiClient = {
     const apiUrl = apiBaseUrl + "/admin/offers";
     const body = {
       teamName: offer.teamName,
-      positionName: offer.positionName,
-      rank: offer.rank,
       logoUrl: offer.logoUrl,
-      applyUrl: offer.applyUrl,
-      requirements: offer.requirements || '',
       aboutUs: offer.aboutUs || '',
       applyContact: offer.applyContact || '',
       websiteLink: offer.websiteLink || '',

@@ -8,7 +8,7 @@
         <template v-slot:prepend>
           <v-icon>mdi-list-box</v-icon>
         </template>
-        <router-link to="/"><v-list-item-title>Ofertas</v-list-item-title></router-link>
+        <router-link to="/"><v-list-item-title>Clubes</v-list-item-title></router-link>
       </v-list-item>
       <v-list-item v-if="isAuthenticated">
         <template v-slot:prepend>

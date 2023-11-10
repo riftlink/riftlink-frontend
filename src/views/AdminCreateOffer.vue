@@ -12,22 +12,15 @@
         <v-card class="mt-3">
           <v-card-title>
             <div>
-              <span class="headline">Crear nueva oferta</span>
+              <span class="headline">Crear nuevo club</span>
             </div>
           </v-card-title>
 
           <v-col cols="12" sm="12" md="12">
-            <!-- Position Name Field -->
-            <v-text-field
-              v-model="offer.positionName"
-              label="Posición"
-              outlined
-            ></v-text-field>
-
             <!-- Team Name Field -->
             <v-text-field
               v-model="offer.teamName"
-              label="Nombre del equipo"
+              label="Nombre del club"
               outlined
             ></v-text-field>
 
@@ -53,20 +46,6 @@
               </v-col>
             </v-row>
 
-            <!-- Rank Field -->
-            <v-text-field
-              v-model="offer.rank"
-              label="Rango requerido"
-              outlined
-            ></v-text-field>
-
-            <!-- Requirements Field -->
-            <v-textarea
-              v-model="offer.requirements"
-              label="Qué pedimos"
-              outlined
-            ></v-textarea>
-
             <!-- About Us Field -->
             <v-textarea
               v-model="offer.aboutUs"
@@ -78,13 +57,6 @@
             <v-text-field
               v-model="offer.applyContact"
               label="Usuario de Discord de contacto"
-              outlined
-            ></v-text-field>
-
-            <!-- Apply Url Field -->
-            <v-text-field
-              v-model="offer.applyUrl"
-              label="Link para aplicar"
               outlined
             ></v-text-field>
 
@@ -163,11 +135,7 @@ export default {
       loading: true,
       offer: {
         teamName: '',
-        positionName: '',
-        rank: '',
         logoUrl: '',
-        applyUrl: '',
-        requirements: '',
         aboutUs: '',
         applyContact: '',
         websiteLink: '',
@@ -192,8 +160,8 @@ export default {
         await offersApiClient.createOffer(accessToken, this.offer)
         this.$router.push('/admin/offers');
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un problema al crear la oferta.")
-        console.error("Couldn't save offer:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un problema al crear el club.")
+        console.error("Couldn't save team:", error);
       }
     },
   },
