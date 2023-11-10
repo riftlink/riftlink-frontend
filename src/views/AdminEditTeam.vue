@@ -5,7 +5,7 @@
         <template v-if="state == 'error'">
           <v-row>
             <v-col cols="12">
-              <p class="text-center">¡Ups! Hubo un error al recuperar la oferta. Refresca la página para intentarlo de nuevo.</p>
+              <p class="text-center">¡Ups! Hubo un error al recuperar el club. Refresca la página para intentarlo de nuevo.</p>
             </v-col>
           </v-row>
         </template>
@@ -16,7 +16,7 @@
           <!-- Back Button -->
           <v-row>
             <v-col cols="12" sm="8" md="6">
-              <router-link to="/admin/offers">Atrás</router-link>
+              <router-link to="/admin/teams">Atrás</router-link>
             </v-col>
           </v-row>
 
@@ -26,27 +26,20 @@
                 <v-col cols="12" md="10">
                   <!-- Header -->
                   <div>
-                    <span class="headline">Editar oferta</span>
+                    <span class="headline">Editar club</span>
                   </div>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <v-btn block color="primary" @click="saveOffer">Guardar</v-btn>
+                  <v-btn block color="primary" @click="saveTeam">Guardar</v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
 
             <v-col cols="12" sm="12" md="12">
-              <!-- Position Name Field -->
-              <v-text-field
-                v-model="offer.positionName"
-                label="Posición"
-                outlined
-              ></v-text-field>
-
               <!-- Team Name Field -->
               <v-text-field
-                v-model="offer.teamName"
-                label="Nombre del equipo"
+                v-model="team.teamName"
+                label="Nombre del club"
                 outlined
               ></v-text-field>
 
@@ -60,56 +53,35 @@
                   >
                     <v-img
                       alt="Avatar"
-                      :src="offer.logoUrl"></v-img>
+                      :src="team.logoUrl"></v-img>
                   </v-avatar>
                 </v-col>
                 <v-col cols="12" md="10">
                   <v-text-field
-                    v-model="offer.logoUrl"
+                    v-model="team.logoUrl"
                     label="URL del avatar"
                     outlined
                   ></v-text-field>
                 </v-col>
               </v-row>
 
-              <!-- Rank Field -->
-              <v-text-field
-                v-model="offer.rank"
-                label="Rango requerido"
-                outlined
-              ></v-text-field>
-
-              <!-- Requirements Field -->
-              <v-textarea
-                v-model="offer.requirements"
-                label="Qué pedimos"
-                outlined
-              ></v-textarea>
-
               <!-- About Us Field -->
               <v-textarea
-                v-model="offer.aboutUs"
+                v-model="team.aboutUs"
                 label="Qué ofrecemos"
                 outlined
               ></v-textarea>
 
               <!-- Apply Contact Field -->
               <v-text-field
-                v-model="offer.applyContact"
+                v-model="team.applyContact"
                 label="Usuario de Discord de contacto"
-                outlined
-              ></v-text-field>
-
-              <!-- Apply Url Field -->
-              <v-text-field
-                v-model="offer.applyUrl"
-                label="Link para aplicar"
                 outlined
               ></v-text-field>
 
               <!-- Checkbox Active -->
               <v-checkbox
-                v-model="offer.active"
+                v-model="team.active"
                 label="Activa"></v-checkbox>
             </v-col>
           </v-card>
@@ -125,28 +97,28 @@
             <v-col cols="12">
               <!-- Apply Contact Field -->
               <v-text-field
-                v-model="offer.websiteLink"
+                v-model="team.websiteLink"
                 label="Sitio web"
                 outlined
               ></v-text-field>
 
               <!-- Apply Contact Field -->
               <v-text-field
-                v-model="offer.linktreeHandle"
+                v-model="team.linktreeHandle"
                 label="Linktree handle"
                 outlined
               ></v-text-field>
 
               <!-- Apply Contact Field -->
               <v-text-field
-                v-model="offer.discordInvite"
+                v-model="team.discordInvite"
                 label="Discord invite"
                 outlined
               ></v-text-field>
 
               <!-- Apply Contact Field -->
               <v-text-field
-                v-model="offer.twitterHandle"
+                v-model="team.twitterHandle"
                 label="Twitter handle"
                 outlined
               ></v-text-field>
@@ -174,13 +146,13 @@
                 <v-btn @click="closeDeleteLightbox"><v-icon>mdi-close</v-icon></v-btn>
               </v-card-actions>
               <v-card-text class="text-center">
-                <div class="headline mb-3">ATENCIÓN: esta operación es irreversible. ¿estás seguro de que deseas borrar la oferta?</div>
+                <div class="headline mb-3">ATENCIÓN: esta operación es irreversible. ¿estás seguro de que deseas borrar el club?</div>
                 <v-text-field
                   v-model="deleteConfirmation"
                   label="Escribe la palabra 'eliminar' para confirmar el borrado"
                   outlined
                 ></v-text-field>
-                <v-btn class="mt-3 mb-12" @click="deleteOffer" color="primary">Eliminar</v-btn>
+                <v-btn class="mt-3 mb-12" @click="deleteTeam" color="primary">Eliminar</v-btn>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -194,7 +166,7 @@
 
 <script>
 import Alert from '@/components/Alert.vue';
-import offersApiClient from "@/services/OffersApiClient.js"
+import teamsApiClient from "@/services/TeamsApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
@@ -205,7 +177,7 @@ export default {
   data() {
     return {
       state: 'loading',
-      offer: null,
+      team: null,
       deleteLightboxOpen: false,
       deleteConfirmation: ''
     };
@@ -218,44 +190,44 @@ export default {
     }
   },
   async created() {
-    await this.fetchOffer();
+    await this.fetchTeam();
   },
   methods: {
-    async fetchOffer() {
+    async fetchTeam() {
       try {
-        const offerId = this.$route.params.id
-        const offer = await offersApiClient.fetchOffer(offerId)
-        this.offer = offer;
+        const teamId = this.$route.params.id
+        const team = await teamsApiClient.fetchTeam(teamId)
+        this.team = team;
         this.state = 'ok'
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar la oferta.")
-        console.error("Couldn't get offer:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un problema al recuperar el club.")
+        console.error("Couldn't get team:", error);
         this.state = 'error'
       }
     },
-    async saveOffer() {
-      const offerId = this.$route.params.id
+    async saveTeam() {
+      const teamId = this.$route.params.id
       const accessToken = await this.getAccessTokenSilently()
       try {
-        await offersApiClient.saveOffer(accessToken, offerId, this.offer)
+        await teamsApiClient.saveTeam(accessToken, teamId, this.team)
         this.$refs.alert.alertSuccess("¡Guardado con éxito!")
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar la oferta.")
-        console.error("Couldn't save offer:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al guardar el club.")
+        console.error("Couldn't save team:", error);
       }
     },
-    async deleteOffer() {
+    async deleteTeam() {
       if (this.deleteConfirmation !== 'eliminar') {
         return
       }
-      const offerId = this.$route.params.id
+      const teamId = this.$route.params.id
       const accessToken = await this.getAccessTokenSilently()
       try {
-        await offersApiClient.deleteOffer(accessToken, offerId)
-        this.$router.push('/admin/offers');
+        await teamsApiClient.deleteTeam(accessToken, teamId)
+        this.$router.push('/admin/teams');
       } catch (error) {
-        this.$refs.alert.alertError("¡Ups! Hubo un error al eliminar la oferta.")
-        console.error("Couldn't delete offer:", error);
+        this.$refs.alert.alertError("¡Ups! Hubo un error al eliminar el club.")
+        console.error("Couldn't delete team:", error);
       }
     },
     openDeleteLightbox() {

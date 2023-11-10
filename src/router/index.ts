@@ -15,13 +15,13 @@ const routes = [
     ],
   },
   {
-    path: '/offer/:id',
+    path: '/team/:id',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '',
-        name: 'OfferDetail',
-        component: () => import('@/views/OfferDetail.vue'),
+        name: 'TeamDetail',
+        component: () => import('@/views/TeamDetail.vue'),
       },
     ],
   },
@@ -49,37 +49,37 @@ const routes = [
     ]
   },
   {
-    path: '/admin/offers',
+    path: '/admin/teams',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '',
-        name: 'AdminOffers',
-        component: () => import('@/views/AdminOffers.vue'),
+        name: 'AdminTeams',
+        component: () => import('@/views/AdminTeams.vue'),
       },
     ],
     beforeEnter: authGuard,
   },
   {
-    path: '/admin/offers/:id',
+    path: '/admin/teams/:id',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '',
-        name: 'AdminEditOffer',
-        component: () => import('@/views/AdminEditOffer.vue'),
+        name: 'AdminEditTeam',
+        component: () => import('@/views/AdminEditTeam.vue'),
       },
     ],
     beforeEnter: authGuard,
   },
   {
-    path: '/admin/offers/new',
+    path: '/admin/teams/new',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '',
-        name: 'AdminCreateOffer',
-        component: () => import('@/views/AdminCreateOffer.vue'),
+        name: 'AdminCreateTeam',
+        component: () => import('@/views/AdminCreateTeam.vue'),
       },
     ],
     beforeEnter: authGuard,

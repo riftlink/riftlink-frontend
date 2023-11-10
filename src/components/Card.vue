@@ -10,21 +10,14 @@
       </v-col>
       <v-col>
         <v-card-text>
-          <p class="caption">Club: {{ teamName }}</p>
-          <p class="caption">Posición: {{ positionName }}</p>
-          <p class="caption">Rango requerido: {{ rank }}</p>
-        </v-card-text>
-      </v-col>
-      <v-col>
-        <v-card-text>
-          <p class="caption text-end">Publicada el: {{ formatDate(createdAt) }}</p>
+          <p class="caption">{{ teamName }}</p>
         </v-card-text>
       </v-col>
     </v-row>
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <router-link :to="{ name: 'OfferDetail', params: { id: id }}">
+      <router-link :to="{ name: 'TeamDetail', params: { id: id }}">
         <v-btn color="primary">Ver más</v-btn>
       </router-link>
     </v-card-actions>
@@ -53,16 +46,6 @@ export default {
     rank: {
       type: String,
       required: true,
-    },
-    createdAt: {
-      type: String,
-      required: true,
-    },
-  },
-  methods: {
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString();
     },
   }
 };
