@@ -1,6 +1,6 @@
 <script setup>
 import Card from '@/components/Card.vue'
-import offersApiClient from "@/services/OffersApiClient.js"
+import teamsApiClient from "@/services/TeamsApiClient.js"
 </script>
 
 <template>
@@ -23,13 +23,13 @@ import offersApiClient from "@/services/OffersApiClient.js"
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </template>
     <template v-else>
-      <!-- Offers -->
+      <!-- Teams -->
       <v-row justify="center" class="mb-3">
-        <v-col cols="12" md="8" v-for="offer in offers" :key="offer.id">
+        <v-col cols="12" md="8" v-for="team in teams" :key="team.id">
           <Card
-            :id="offer.id"
-            :logo="offer.logoUrl"
-            :teamName="offer.teamName"
+            :id="team.id"
+            :logo="team.logoUrl"
+            :teamName="team.teamName"
             >
           </Card>
         </v-col>
@@ -54,38 +54,38 @@ export default {
   data() {
     return {
       state: 'loading',
-      offers: [],
+      teams: [],
       itemsPerPage: 10,
       currentPage: 1,
-      totalOffers: 0
+      totalTeams: 0
     };
   },
   async created() {
-    await this.fetchOffers();
+    await this.fetchTeams();
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.totalOffers / this.itemsPerPage);
+      return Math.ceil(this.totalTeams / this.itemsPerPage);
     }
   },
   methods: {
-    async fetchOffers() {
+    async fetchTeams() {
       this.state = 'loading'
       try {
-        const pagedOffers = await offersApiClient.fetchActiveOffers(this.currentPage, this.itemsPerPage)
-        this.offers = pagedOffers.offers
-        this.totalOffers = pagedOffers.total
-        this.currentPage = pagedOffers.page
+        const pagedTeams = await teamsApiClient.fetchActiveTeams(this.currentPage, this.itemsPerPage)
+        this.teams = pagedTeams.teams
+        this.totalTeams = pagedTeams.total
+        this.currentPage = pagedTeams.page
         this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar los clubes.")
-        console.error("Couldn't get offers:", error);
+        console.error("Couldn't get teams:", error);
         this.state = 'error'
       }
     },
     onPageChanged(newPage) {
       this.currentPage = newPage
-      this.fetchOffers()
+      this.fetchTeams()
     }
   },
 };

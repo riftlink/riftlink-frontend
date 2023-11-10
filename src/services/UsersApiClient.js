@@ -35,8 +35,8 @@ export const UsersApiClient = {
         'Authorization': 'Bearer ' + accessToken
       }
     })
-    const offers = response.data
-    return offers
+    const users = response.data
+    return users
   },
 
   async refreshSummoner(accessToken, userId) {

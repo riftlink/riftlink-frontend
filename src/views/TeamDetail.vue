@@ -23,7 +23,7 @@
           <!-- Header -->
           <v-row class="mb-3" justify="center">
             <v-col cols="12">
-              <h2>{{ offer.teamName }}</h2>
+              <h2>{{ team.teamName }}</h2>
             </v-col>
           </v-row>
 
@@ -33,13 +33,13 @@
               <v-col md="4" lg="3" xl="2">
                 <v-card-title>
                   <v-avatar size="128">
-                    <v-img cover :src="offer.logoUrl" alt="{{ offer.teamName }} Logo" />
+                    <v-img cover :src="team.logoUrl" alt="{{ team.teamName }} Logo" />
                   </v-avatar>
                 </v-card-title>
               </v-col>
               <v-col>
                 <v-card-text>
-                  <p class="caption">{{ offer.teamName }}</p>
+                  <p class="caption">{{ team.teamName }}</p>
                 </v-card-text>
               </v-col>
             </v-row>
@@ -54,28 +54,28 @@
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
                   <p class="mt-3">
-                    <a class="mr-2" :href="twitterUrl" target="_blank" v-if="offer.twitterHandle">
+                    <a class="mr-2" :href="twitterUrl" target="_blank" v-if="team.twitterHandle">
                       <v-img
                         inline
                         :width="32"
                         src="~/../assets/img/social/ic-twitter.png"
                       ></v-img>
                     </a>
-                    <a class="mr-2" :href="offer.discordInvite" target="_blank" v-if="offer.discordInvite">
+                    <a class="mr-2" :href="team.discordInvite" target="_blank" v-if="team.discordInvite">
                       <v-img
                         inline
                         :width="32"
                         src="~/../assets/img/social/ic-discord.png"
                       ></v-img>
                     </a>
-                    <a class="mr-2" :href="offer.websiteLink" target="_blank" v-if="offer.websiteLink">
+                    <a class="mr-2" :href="team.websiteLink" target="_blank" v-if="team.websiteLink">
                       <v-img
                         inline
                         :width="32"
                         src="~/../assets/img/social/ic-web.png"
                       ></v-img>
                     </a>
-                    <a class="mr-2" :href="linktreeUrl" target="_blank" v-if="offer.linktreeHandle">
+                    <a class="mr-2" :href="linktreeUrl" target="_blank" v-if="team.linktreeHandle">
                       <v-img
                         inline
                         :width="32"
@@ -89,14 +89,14 @@
           </v-card>
 
           <!-- About us -->
-          <v-card class="mb-3" v-if="offer.aboutUs">
+          <v-card class="mb-3" v-if="team.aboutUs">
             <v-expansion-panels>
               <v-expansion-panel elevation="0">
                 <v-expansion-panel-title>
                   Sobre nosotros
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                  <p class="pa-2" v-html="markdown.render(offer.aboutUs)"></p>
+                  <p class="pa-2" v-html="markdown.render(team.aboutUs)"></p>
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -112,7 +112,7 @@
 <script>
 import Alert from '@/components/Alert.vue';
 
-import offersApiClient from "@/services/OffersApiClient.js"
+import teamsApiClient from "@/services/TeamsApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
@@ -126,7 +126,7 @@ export default {
     return {
       state: 'loading',
       panels: [0],
-      offer: {
+      team: {
         teamName: '',
         logoUrl: '',
         applyContact: '',
@@ -136,7 +136,7 @@ export default {
     };
   },
   async created() {
-    await this.fetchOffer();
+    await this.fetchTeam();
   },
   setup() {
     const markdown = new MarkdownIt()
@@ -145,28 +145,28 @@ export default {
   },
   computed: {
     twitterUrl() {
-      return 'https://www.twitter.com/' + this.offer.twitterHandle
+      return 'https://www.twitter.com/' + this.team.twitterHandle
     },
     linktreeUrl() {
-      return 'https://www.linktr.ee/' + this.offer.linktreeHandle
+      return 'https://www.linktr.ee/' + this.team.linktreeHandle
     },
     shouldShowSocialLinks() {
-      return this.offer.twitterHandle
-          || this.offer.linktreeHandle
-          || this.offer.discordInvite
-          || this.offer.websiteLink
+      return this.team.twitterHandle
+          || this.team.linktreeHandle
+          || this.team.discordInvite
+          || this.team.websiteLink
     }
   },
   methods: {
-    async fetchOffer() {
-      const offerId = this.$route.params.id
+    async fetchTeam() {
+      const teamId = this.$route.params.id
       try {
-        const offer = await offersApiClient.fetchOffer(offerId)
-        this.offer = offer;
+        const team = await teamsApiClient.fetchTeam(teamId)
+        this.team = team;
         this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar el club.")
-        console.error("Couldn't get offer:", error);
+        console.error("Couldn't get team:", error);
         this.state = 'error'
       }
     },

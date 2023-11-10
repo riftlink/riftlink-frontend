@@ -5,7 +5,7 @@
         <!-- Back Button -->
         <v-row>
           <v-col cols="12" sm="8" md="6">
-            <router-link to="/admin/offers"><i class="mdi mdi-arrow-left"></i> Atrás</router-link>
+            <router-link to="/admin/teams"><i class="mdi mdi-arrow-left"></i> Atrás</router-link>
           </v-col>
         </v-row>
 
@@ -19,7 +19,7 @@
           <v-col cols="12" sm="12" md="12">
             <!-- Team Name Field -->
             <v-text-field
-              v-model="offer.teamName"
+              v-model="team.teamName"
               label="Nombre del club"
               outlined
             ></v-text-field>
@@ -34,12 +34,12 @@
                 >
                   <v-img
                     alt="Avatar"
-                    :src="offer.logoUrl"></v-img>
+                    :src="team.logoUrl"></v-img>
                 </v-avatar>
               </v-col>
               <v-col cols="12" md="10">
                 <v-text-field
-                  v-model="offer.logoUrl"
+                  v-model="team.logoUrl"
                   label="URL del avatar"
                   outlined
                 ></v-text-field>
@@ -48,21 +48,21 @@
 
             <!-- About Us Field -->
             <v-textarea
-              v-model="offer.aboutUs"
+              v-model="team.aboutUs"
               label="Qué ofrecemos"
               outlined
             ></v-textarea>
 
             <!-- Apply Contact Field -->
             <v-text-field
-              v-model="offer.applyContact"
+              v-model="team.applyContact"
               label="Usuario de Discord de contacto"
               outlined
             ></v-text-field>
 
             <!-- Checkbox Active -->
             <v-checkbox
-                v-model="offer.active"
+                v-model="team.active"
                 label="Activa"></v-checkbox>
           </v-col>
         </v-card>
@@ -77,28 +77,28 @@
           <v-col cols="12" sm="12" md="12">
             <!-- Apply Contact Field -->
             <v-text-field
-              v-model="offer.websiteLink"
+              v-model="team.websiteLink"
               label="Sitio web"
               outlined
             ></v-text-field>
 
             <!-- Apply Contact Field -->
             <v-text-field
-              v-model="offer.linktreeHandle"
+              v-model="team.linktreeHandle"
               label="Linktree handle"
               outlined
             ></v-text-field>
 
             <!-- Apply Contact Field -->
             <v-text-field
-              v-model="offer.discordInvite"
+              v-model="team.discordInvite"
               label="Discord invite"
               outlined
             ></v-text-field>
 
             <!-- Apply Contact Field -->
             <v-text-field
-              v-model="offer.twitterHandle"
+              v-model="team.twitterHandle"
               label="Twitter handle"
               outlined
             ></v-text-field>
@@ -110,7 +110,7 @@
     <!-- Create Button -->
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6">
-        <v-btn block color="primary" @click="createOffer">Crear</v-btn>
+        <v-btn block color="primary" @click="createTeam">Crear</v-btn>
       </v-col>
     </v-row>
 
@@ -124,7 +124,7 @@ import Alert from '@/components/Alert.vue';
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
-import offersApiClient from "@/services/OffersApiClient.js"
+import teamsApiClient from "@/services/TeamsApiClient.js"
 
 export default {
   components: {
@@ -133,7 +133,7 @@ export default {
   data() {
     return {
       loading: true,
-      offer: {
+      team: {
         teamName: '',
         logoUrl: '',
         aboutUs: '',
@@ -154,11 +154,11 @@ export default {
     }
   },
   methods: {
-    async createOffer() {
+    async createTeam() {
       try {
         const accessToken = await this.getAccessTokenSilently()
-        await offersApiClient.createOffer(accessToken, this.offer)
-        this.$router.push('/admin/offers');
+        await teamsApiClient.createTeam(accessToken, this.team)
+        this.$router.push('/admin/teams');
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un problema al crear el club.")
         console.error("Couldn't save team:", error);

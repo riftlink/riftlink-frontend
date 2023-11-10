@@ -15,7 +15,7 @@
       <!-- Save Button -->
       <v-row justify="end" class="mb-3">
         <v-col cols="12" md="2">
-          <router-link to="/admin/offers/new"><v-btn block color="primary">Nuevo club</v-btn></router-link>
+          <router-link to="/admin/teams/new"><v-btn block color="primary">Nuevo club</v-btn></router-link>
         </v-col>
       </v-row>
       <v-table>
@@ -34,12 +34,12 @@
         </thead>
         <tbody>
           <tr
-            v-for="offer in offers"
-            :key="offer.id"
+            v-for="team in teams"
+            :key="team.id"
           >
-            <td>{{ offer.teamName }}</td>
+            <td>{{ team.teamName }}</td>
             <td>
-              <template v-if="offer.active">
+              <template v-if="team.active">
                 <v-icon>mdi-check</v-icon>
               </template>
               <template v-else>
@@ -47,8 +47,8 @@
               </template>
             </td>
             <td>
-              <router-link :to="{ name: 'OfferDetail', params: { id: offer.id }}"><v-icon>mdi-eye</v-icon></router-link>&nbsp;
-              <router-link :to="{ name: 'AdminEditOffer', params: { id: offer.id }}"><v-icon>mdi-pencil</v-icon></router-link>
+              <router-link :to="{ name: 'TeamDetail', params: { id: team.id }}"><v-icon>mdi-eye</v-icon></router-link>&nbsp;
+              <router-link :to="{ name: 'AdminEditTeam', params: { id: team.id }}"><v-icon>mdi-pencil</v-icon></router-link>
             </td>
           </tr>
         </tbody>
@@ -62,7 +62,7 @@
 <script>
 import Alert from '@/components/Alert.vue';
 
-import offersApiClient from "@/services/OffersApiClient.js"
+import teamsApiClient from "@/services/TeamsApiClient.js"
 
 import { useAuth0 } from '@auth0/auth0-vue';
 
@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       state: 'loading',
-      offers: [],
+      teams: [],
     };
   },
   setup() {
@@ -84,18 +84,18 @@ export default {
     }
   },
   async created() {
-    await this.fetchOffers();
+    await this.fetchTeams();
   },
   methods: {
-    async fetchOffers() {
+    async fetchTeams() {
       const accessToken = await this.getAccessTokenSilently()
       try {
-        const offers = await offersApiClient.fetchAllOffers(accessToken)
-        this.offers = offers;
+        const teams = await teamsApiClient.fetchAllTeams(accessToken)
+        this.teams = teams;
         this.state = 'ok';
       } catch (error) {
         this.$refs.alert.alertError("¡Ups! Hubo un error al recuperar los clubes.")
-        console.error("Couldn't get offers:", error);
+        console.error("Couldn't get teams:", error);
         this.state = 'error';
       }
     },
