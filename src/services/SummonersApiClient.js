@@ -13,6 +13,13 @@ export const SummonersApiClient = {
     const summoners = response.data
     return summoners
   },
+
+  async fetchSummoner(summonerId) {
+    const apiUrl = apiBaseUrl + '/summoners';
+    const response = await axios.get(apiUrl + '/' + summonerId)
+    const summoner = response.data
+    return summoner
+  },
 }
 
 export default SummonersApiClient

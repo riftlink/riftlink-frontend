@@ -49,6 +49,17 @@ const routes = [
     ]
   },
   {
+    path: '/player/:id',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'PlayerDetail',
+        component: () => import('@/views/PlayerDetail.vue'),
+      },
+    ],
+  },
+  {
     path: '/admin/teams',
     component: () => import('@/layouts/default/Default.vue'),
     children: [

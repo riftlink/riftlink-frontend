@@ -41,7 +41,9 @@
             :key="summoner.id"
           >
             <td>{{ summoner.index }}</td>
-            <td>{{ summoner.name }}</td>
+            <td>
+              <router-link :to="{ name: 'PlayerDetail', params: { id: summoner.id }}">{{ summoner.name }}</router-link>
+            </td>
             <td>{{ formatRank(summoner) }}</td>
             <td>{{ summoner.leaguePoints }}</td>
             <td>{{ summoner.totalGames }}</td>
