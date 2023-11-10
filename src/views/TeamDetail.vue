@@ -14,16 +14,9 @@
         </template>
         <template v-else>
           <!-- Back Button -->
-          <v-row>
+          <v-row class="mb-2">
             <v-col cols="12" sm="8" md="6">
               <router-link to="/"><i class="mdi mdi-arrow-left"></i> Volver a clubes</router-link>
-            </v-col>
-          </v-row>
-
-          <!-- Header -->
-          <v-row class="mb-3" justify="center">
-            <v-col cols="12">
-              <h2>{{ team.teamName }}</h2>
             </v-col>
           </v-row>
 
@@ -39,20 +32,7 @@
               </v-col>
               <v-col>
                 <v-card-text>
-                  <p class="caption">{{ team.teamName }}</p>
-                </v-card-text>
-              </v-col>
-            </v-row>
-          </v-card>
-
-          <!-- Social networks -->
-          <v-card class="mb-3" v-if="shouldShowSocialLinks">
-            <v-expansion-panels v-model="panels">
-              <v-expansion-panel elevation="0">
-                <v-expansion-panel-title>
-                  Redes sociales
-                </v-expansion-panel-title>
-                <v-expansion-panel-text>
+                  <h2 class="caption">{{ team.teamName }}</h2>
                   <p class="mt-3">
                     <a class="mr-2" :href="twitterUrl" target="_blank" v-if="team.twitterHandle">
                       <v-img
@@ -83,24 +63,53 @@
                       ></v-img>
                     </a>
                   </p>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
+                </v-card-text>
+              </v-col>
+            </v-row>
           </v-card>
 
           <!-- About us -->
           <v-card class="mb-3" v-if="team.aboutUs">
-            <v-expansion-panels>
-              <v-expansion-panel elevation="0">
-                <v-expansion-panel-title>
-                  Sobre nosotros
-                </v-expansion-panel-title>
-                <v-expansion-panel-text>
-                  <p class="pa-2" v-html="markdown.render(team.aboutUs)"></p>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
+            <v-card-title>Sobre nosotros</v-card-title>
+            <v-card-text>
+              <p class="pa-2" v-html="markdown.render(team.aboutUs)"></p>
+            </v-card-text>
           </v-card>
+
+          <!-- Players -->
+          <!-- Header -->
+          <v-row class="mt-3 mb-3" justify="center">
+            <v-col cols="12">
+              <h3>Jugadores</h3>
+            </v-col>
+          </v-row>
+          <v-table>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  Position
+                </th>
+                <th class="text-left">
+                  Name
+                </th>
+                <th class="text-left">
+                  Rank
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="player in players"
+                :key="player.id"
+              >
+                <td>?? <!-- TODO: Position --></td>
+                <td>
+                  <router-link :to="{ name: 'PlayerDetail', params: { id: player.id }}">{{ player.name }}</router-link>
+                </td>
+                <td>{{ formatRank(player) }} {{ player.leaguePoints }} LP</td>
+              </tr>
+            </tbody>
+          </v-table>
         </template>
       </v-col>
     </v-row>
@@ -125,13 +134,44 @@ export default {
   data() {
     return {
       state: 'loading',
-      panels: [0],
       team: {
         teamName: '',
         logoUrl: '',
         applyContact: '',
         aboutUs: '',
       },
+      players: [
+        {
+          name: "Broken Blade",
+          tier: "CHALLENGER",
+          rank: "I",
+          leaguePoints: 1982
+        },
+        {
+          name: "Yike",
+          tier: "CHALLENGER",
+          rank: "I",
+          leaguePoints: 2001
+        },
+        {
+          name: "Caps",
+          tier: "CHALLENGER",
+          rank: "I",
+          leaguePoints: 5124
+        },
+        {
+          name: "Hans Sama",
+          tier: "CHALLENGER",
+          rank: "I",
+          leaguePoints: 910
+        },
+        {
+          name: "Mikyx",
+          tier: "CHALLENGER",
+          rank: "I",
+          leaguePoints: 1120
+        }
+      ],
       isAuthenticated: null,
     };
   },
@@ -172,7 +212,14 @@ export default {
     },
     login() {
       this.loginWithRedirect();
-    }
+    },
+    formatRank(summoner) {
+      const formattedRank = summoner.tier.charAt(0).toUpperCase() + summoner.tier.slice(1).toLowerCase()
+      if (summoner.tier === "UNRANKED" || summoner.tier === "MASTER" || summoner.tier === "GRANDMASTER" || summoner.tier === "CHALLENGER") {
+        return formattedRank
+      }
+      return formattedRank + " " + summoner.rank
+    },
   },
 };
 </script>
