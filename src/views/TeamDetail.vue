@@ -81,6 +81,7 @@
           <v-row class="mt-3 mb-3" justify="center">
             <v-col cols="12">
               <h3>Jugadores</h3>
+              <a href="https://op.gg">Ver multi op.gg</a>
             </v-col>
           </v-row>
           <v-table>
