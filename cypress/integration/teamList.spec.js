@@ -2,7 +2,11 @@
 
 describe('Team list', () => {
   beforeEach(() => {
+    cy.intercept('/teams?page=1&pageSize=10', { fixture: 'teams.json' }).as('fetchTeams')
+
     cy.visit('http://localhost:3000/')
+
+    cy.wait('@fetchTeams')
   })
 
   it('displays teams', () => {
