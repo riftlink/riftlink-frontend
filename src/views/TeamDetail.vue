@@ -39,7 +39,7 @@
               </v-col>
               <v-col>
                 <v-card-text>
-                  <p class="caption">{{ team.teamName }}</p>
+                  <p class="caption" data-cy="team-name">{{ team.teamName }}</p>
                 </v-card-text>
               </v-col>
             </v-row>
@@ -92,7 +92,7 @@
           <v-card class="mb-3" v-if="team.aboutUs">
             <v-expansion-panels>
               <v-expansion-panel elevation="0">
-                <v-expansion-panel-title>
+                <v-expansion-panel-title data-cy="about-us-panel-header">
                   Sobre nosotros
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
