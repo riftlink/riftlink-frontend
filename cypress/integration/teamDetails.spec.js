@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Team list', () => {
+describe('Team details', () => {
   beforeEach(() => {
     cy.intercept('/teams/**', { fixture: 'teams/t1.json' }).as('fetchTeamDetails')
 
