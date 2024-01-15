@@ -24,8 +24,8 @@ import teamsApiClient from "@/services/TeamsApiClient.js"
     </template>
     <template v-else>
       <!-- Teams -->
-      <v-row justify="center" class="mb-3">
-        <v-col cols="12" md="8" v-for="team in teams" :key="team.id">
+      <v-row justify="center" class="mb-3" data-cy="team-list">
+        <v-col cols="12" md="8" v-for="team in teams" :key="team.id" data-cy="team-list-item">
           <Card
             :id="team.id"
             :logo="team.logoUrl"
