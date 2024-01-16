@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.3.0",
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@mdi/font": "7.0.96",
     "axios": "^1.4.0",
     "core-js": "^3.29.0",
