@@ -21,7 +21,7 @@ Then("the team list should contain 7 teams", () => {
   teamListPage.getTeamListItems().should('have.length', 7)
 });
 
-When("I click in team card see more button", () => {
+When("I click in first team card see more button", () => {
   const t1Card = teamListPage.getTeamListItems().first()
 
   t1Card.find('[data-cy=see-more-button]').click()
