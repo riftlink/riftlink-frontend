@@ -7,10 +7,13 @@
     "build-pre": "vue-tsc --noEmit && vite build --mode pre",
     "build-pro": "vue-tsc --noEmit && vite build --mode pro",
     "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "eslint . --fix --ignore-path .gitignore",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.3.0",
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@mdi/font": "7.0.96",
     "axios": "^1.4.0",
     "core-js": "^3.29.0",
@@ -27,6 +30,7 @@
     "@types/webfontloader": "^1.6.35",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
+    "cypress": "^13.6.2",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
     "sass": "^1.60.0",

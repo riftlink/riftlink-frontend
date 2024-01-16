@@ -1,0 +1,48 @@
+{
+    "teams": [
+        {
+            "id": "f2163c37-8931-4c4d-8a22-bf9a0bbaf6aa",
+            "createdAt": "2023-11-10T00:00:00",
+            "teamName": "T1",
+            "logoUrl": "https://media.vandalsports.com/master/10-2019/2019108161229_1.jpg"
+        },
+        {
+            "id": "92b6a6a7-9be9-44e8-857a-470793876f5a",
+            "createdAt": "2023-09-01T00:00:00",
+            "teamName": "Fnatic",
+            "logoUrl": "https://cdn.sanity.io/images/5gii1snx/production/c32c2cb848fd3338ff23a590ec5c0e052b080f27-1000x1000.png"
+        },
+        {
+            "id": "dd2af523-ad7e-4939-9adf-101796e31532",
+            "createdAt": "2023-09-01T00:00:00",
+            "teamName": "Rising Crows e-sports",
+            "logoUrl": "https://www.risingcrows.com/assets/img/og-card.jpg"
+        },
+        {
+            "id": "c1776796-6fe2-4306-9d49-59cab49c46ab",
+            "createdAt": "2023-09-01T00:00:00",
+            "teamName": "Team BDS",
+            "logoUrl": "https://parisfanfestival.com/wp-content/uploads/2023/04/BDS-874x954-1.jpg"
+        },
+        {
+            "id": "94c669fe-63b2-4975-a9a9-988017a1eb98",
+            "createdAt": "2023-09-01T00:00:00",
+            "teamName": "Giants",
+            "logoUrl": "https://www.esportmaniacos.com/wp-content/uploads/2021/06/vgia-780x470.png"
+        },
+        {
+            "id": "f9be8a95-4084-4618-a41f-3fd1897e7ccf",
+            "createdAt": "2023-09-01T00:00:00",
+            "teamName": "Exeal e-sports",
+            "logoUrl": "https://yt3.googleusercontent.com/ytc/AOPolaQ8C7e94KbsLK5MeTHQjbQkToNycJ6JNAgaMLml=s900-c-k-c0x00ffffff-no-rj"
+        },
+        {
+            "id": "850cef77-6afd-4b7e-a909-f2603af39d3e",
+            "createdAt": "2023-08-31T00:00:00",
+            "teamName": "G2",
+            "logoUrl": "https://steamuserimages-a.akamaihd.net/ugc/777280916673785599/AEFB874FE6C73FE44A8D5ED15CEBF2A89F95B175/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+        }
+    ],
+    "total": 7,
+    "page": 1
+}

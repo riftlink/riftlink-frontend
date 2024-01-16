@@ -18,7 +18,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <router-link :to="{ name: 'TeamDetail', params: { id: id }}">
-        <v-btn color="primary">Ver más</v-btn>
+        <v-btn color="primary" data-cy="see-more-button">Ver más</v-btn>
       </router-link>
     </v-card-actions>
   </v-card>
